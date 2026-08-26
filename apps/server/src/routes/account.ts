@@ -1,6 +1,7 @@
 import type { FastifyInstance } from "fastify";
 import { z } from "zod";
 import { analyzeConfigOf } from "../context.js";
+import { ApiError } from "../errors.js";
 import { booleanQuery } from "./query.js";
 
 /**
@@ -9,6 +10,10 @@ import { booleanQuery } from "./query.js";
  * Every one of these needs the API key, so every one of them can answer 428
  * `RIOT_KEY_MISSING` — the UI turns that into a "connecter mon compte" call to
  * action rather than an error toast.
+ *
+ * The one exception is `/api/account/me`, which resolves the account the
+ * League client is logged in as. It reads the local client, needs no API key
+ * at all, and lets the UI skip the "type your Riot ID" step entirely.
  *
  * Playstyle profiling reads 50 matches one by one through a rate limiter; it
  * is cached per puuid, forced with `refresh=1`, and streams progress over the
@@ -25,6 +30,42 @@ export async function accountRoutes(app: FastifyInstance): Promise<void> {
         })
         .strip()
         .transform((value) => value.platform ?? value.region);
+
+    /**
+     * The account the local League client is logged in as.
+     *
+     * Needs no Riot API key: the puuid comes from the client itself. The
+     * account routes below take it straight from here, so a user with the
+     * client running never has to type their Riot ID.
+     */
+    app.get("/api/account/me", async () => {
+        const status = ctx.lcu.status();
+        if (!status.enabled) {
+            throw new ApiError(
+                409,
+                "LCU_DISABLED",
+                "L'intégration au client League of Legends est désactivée.",
+            );
+        }
+        if (!status.connected || !status.summoner) {
+            throw new ApiError(
+                404,
+                "LCU_NO_SUMMONER",
+                "Aucun compte détecté : le client League of Legends n'est pas connecté.",
+            );
+        }
+        const { summoner } = status;
+        return {
+            puuid: summoner.puuid,
+            gameName: summoner.gameName,
+            tagLine: summoner.tagLine,
+            displayName: summoner.displayName ?? summoner.gameName,
+            summonerLevel: summoner.summonerLevel ?? null,
+            profileIconId: summoner.profileIconId ?? null,
+            platform: ctx.riot.defaultPlatform(),
+            source: "lcu" as const,
+        };
+    });
 
     app.get("/api/account/lookup", async (request) => {
         const query = z

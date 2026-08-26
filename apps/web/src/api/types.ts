@@ -535,6 +535,25 @@ export type BuildsQuery = {
 
 // ---------------------------------------------------------------- account ---
 
+/**
+ * `GET /api/account/me` — the account the local League client is logged in as.
+ *
+ * The only account route that needs no Riot API key: the puuid comes from the
+ * client itself. `404 LCU_NO_SUMMONER` (client closed or nobody logged in) and
+ * `409 LCU_DISABLED` (integration switched off) are answers, not failures.
+ */
+export type AccountMeResponse = {
+    puuid: string;
+    gameName: string | null;
+    tagLine: string | null;
+    displayName: string | null;
+    summonerLevel: number | null;
+    profileIconId: number | null;
+    /** The shard the server is configured for. */
+    platform: string;
+    source: "lcu";
+};
+
 export type AccountLookupResponse = {
     puuid: string;
     gameName: string;

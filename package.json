@@ -4,8 +4,13 @@
   "version": "0.1.0",
   "type": "module",
   "description": "League of Legends draft companion: real-time champ select predictions, builds and playstyle analysis",
-  "engines": { "node": ">=20" },
-  "workspaces": ["packages/*", "apps/*"],
+  "engines": {
+    "node": ">=20"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
   "scripts": {
     "typecheck": "tsc -b tsconfig.build.json",
     "build": "npm run build --workspaces --if-present",
@@ -18,7 +23,14 @@
     "dev:web": "npm run dev -w @draftpredict/web",
     "start": "npm run start -w @draftpredict/server",
     "desktop": "npm run dev -w @draftpredict/desktop",
-    "pipeline": "npm run start -w @draftpredict/pipeline"
+    "pipeline": "npm run start -w @draftpredict/pipeline",
+    "smoke": "node scripts/smoke.mjs",
+    "build:packages": "tsc -b packages/core packages/data packages/riot packages/lcu",
+    "prepare": "npm run build:packages",
+    "predev": "npm run build:packages",
+    "predev:server": "npm run build:packages",
+    "prepipeline": "npm run build:packages",
+    "clean": "node scripts/clean.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.0",

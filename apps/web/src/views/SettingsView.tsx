@@ -1,17 +1,8 @@
-import { Panel } from "../ui";
-import { ROUTES } from "../app/routes";
-
 /**
- * Placeholder — replaced by the Paramètres view.
+ * Route entry point for `/parametres`.
  *
- * Foundation: `useConfig()` / `useUpdateConfig()` (never echo the key — only
- * `hasRiotApiKey` and `riotApiKeyPreview` exist), `useDatasetProviders()` and
- * `useRefreshDataset()`, `usePreferencesStore` for the local preferences.
+ * The screen itself lives in `views/settings/`, split into one panel per group
+ * of settings; this file only keeps the default export the router lazily
+ * imports.
  */
-export default function SettingsView() {
-    return (
-        <Panel title={ROUTES.settings.label} subtitle={ROUTES.settings.description}>
-            <p className="text-sm text-ink-muted">Vue en cours de construction.</p>
-        </Panel>
-    );
-}
+export { default } from "./settings/SettingsView";

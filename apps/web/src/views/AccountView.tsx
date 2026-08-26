@@ -1,17 +1,7 @@
-import { Panel } from "../ui";
-import { ROUTES } from "../app/routes";
-
 /**
- * Placeholder — replaced by the Compte view.
+ * Route entry point for `/compte`.
  *
- * Foundation: `useAccountLookup` / `useProfile` / `useMatches` /
- * `usePlaystyle`, `useRiotKeyState()` and `<RiotKeyMissingState/>` for the 428
- * path, `useJobProgress("playstyle", puuid)` for the progress bar.
+ * The screen itself lives in `views/account/`, split into focused components;
+ * this file only keeps the default export the router lazily imports.
  */
-export default function AccountView() {
-    return (
-        <Panel title={ROUTES.account.label} subtitle={ROUTES.account.description}>
-            <p className="text-sm text-ink-muted">Vue en cours de construction.</p>
-        </Panel>
-    );
-}
+export { default } from "./account/AccountView";

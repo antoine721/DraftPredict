@@ -1,18 +1,7 @@
-import { Panel } from "../ui";
-import { ROUTES } from "../app/routes";
-
 /**
- * Placeholder — replaced by the Champions & builds view.
+ * Route entry point for `/champions` and `/champions/:championKey`.
  *
- * Foundation: `useChampionIndex()` for the catalogue, `useBuilds()` for
- * items/runes/spells/skills, `useParams().championKey` for the route
- * parameter, `<DatasetNotice source={payload.source}/>` for the fixture
- * warning.
+ * The screen itself lives in `views/builds/`, split into focused components;
+ * this file only keeps the default export the router lazily imports.
  */
-export default function ChampionsView() {
-    return (
-        <Panel title={ROUTES.champions.label} subtitle={ROUTES.champions.description}>
-            <p className="text-sm text-ink-muted">Vue en cours de construction.</p>
-        </Panel>
-    );
-}
+export { default } from "./builds/ChampionsView";

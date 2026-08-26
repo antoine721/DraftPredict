@@ -40,9 +40,7 @@ describe("normalizeRole", () => {
 
     it("is case and whitespace insensitive", () => {
         expect(normalizeRole(" utility ")).toBe(Role.Support);
-        expect(normalizeRole(null, null, "  Bottom ", " duo_carry ")).toBe(
-            Role.Bottom,
-        );
+        expect(normalizeRole(null, null, "  Bottom ", " duo_carry ")).toBe(Role.Bottom);
     });
 });
 
@@ -50,7 +48,10 @@ describe("assignTeamRoles", () => {
     it("keeps the normalised roles when they are unique", () => {
         const players = ["a", "b", "c", "d", "e"];
         const roles = [Role.Top, Role.Jungle, Role.Middle, Role.Bottom, Role.Support];
-        const assigned = assignTeamRoles(players, (player) => roles[players.indexOf(player)]!);
+        const assigned = assignTeamRoles(
+            players,
+            (player) => roles[players.indexOf(player)]!,
+        );
         expect([...assigned.values()]).toEqual(roles);
     });
 
@@ -63,7 +64,10 @@ describe("assignTeamRoles", () => {
             Role.Bottom,
             Role.Support,
         ];
-        const assigned = assignTeamRoles(players, (player) => roles[players.indexOf(player)]!);
+        const assigned = assignTeamRoles(
+            players,
+            (player) => roles[players.indexOf(player)]!,
+        );
         expect(assigned.get("a")).toBe(Role.Middle);
         expect(assigned.get("d")).toBe(Role.Bottom);
         expect(assigned.get("e")).toBe(Role.Support);

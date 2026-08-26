@@ -92,11 +92,7 @@ export {
 // --- API types ------------------------------------------------------------
 export type { RiotAccountDto } from "./types/account.js";
 export type { SummonerDto } from "./types/summoner.js";
-export type {
-    LeagueEntryDto,
-    LeagueQueueType,
-    MiniSeriesDto,
-} from "./types/league.js";
+export type { LeagueEntryDto, LeagueQueueType, MiniSeriesDto } from "./types/league.js";
 export type { ChampionMasteryDto } from "./types/mastery.js";
 export type {
     MatchChallengesDto,
@@ -160,10 +156,7 @@ export {
 // --- playstyle ------------------------------------------------------------
 export { profilePlaystyle } from "./playstyle/profile.js";
 
-export {
-    ARCHETYPES,
-    pickArchetype,
-} from "./playstyle/archetype.js";
+export { ARCHETYPES, pickArchetype } from "./playstyle/archetype.js";
 
 export {
     AXIS_METRIC_WEIGHTS,

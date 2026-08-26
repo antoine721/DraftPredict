@@ -11,11 +11,7 @@ import {
     scalingScore,
     standardDeviation,
 } from "./axes.js";
-import {
-    BASELINE_METRICS,
-    DEFAULT_BASELINES,
-    normalizeMetric,
-} from "./baselines.js";
+import { BASELINE_METRICS, DEFAULT_BASELINES, normalizeMetric } from "./baselines.js";
 import {
     computeGameMetrics,
     normalizeGameMetrics,
@@ -29,7 +25,10 @@ beforeEach(() => {
     resetFixtureCounter();
 });
 
-function analyze(summary: MatchSummary, role = summary.role ?? Role.Middle): AnalyzedGame {
+function analyze(
+    summary: MatchSummary,
+    role = summary.role ?? Role.Middle,
+): AnalyzedGame {
     const metrics = computeGameMetrics(summary);
     const normalized = normalizeGameMetrics(metrics, role, DEFAULT_BASELINES);
     return {

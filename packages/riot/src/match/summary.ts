@@ -241,7 +241,8 @@ function objectiveCounts(team: TeamDto | undefined): MatchTeamObjectiveCounts {
 
 function runesOf(participant: ParticipantDto): MatchRunesSummary {
     const styles = participant.perks?.styles ?? [];
-    const primary = styles.find((style) => style.description === "primaryStyle") ?? styles[0];
+    const primary =
+        styles.find((style) => style.description === "primaryStyle") ?? styles[0];
     const secondary =
         styles.find((style) => style.description === "subStyle") ?? styles[1];
     const primarySelections = (primary?.selections ?? []).map((s) => s.perk);
@@ -285,9 +286,7 @@ function teamSummary(
     roles: Map<ParticipantDto, Role>,
 ): MatchTeamSummary {
     const team = teams.find((entry) => entry.teamId === teamId);
-    const members = participants.filter(
-        (participant) => participant.teamId === teamId,
-    );
+    const members = participants.filter((participant) => participant.teamId === teamId);
     const sum = (pick: (p: ParticipantDto) => number): number =>
         members.reduce((total, participant) => total + (pick(participant) || 0), 0);
     return {
@@ -425,8 +424,7 @@ export function summarizeMatchOrNull(
         assists: me.assists,
         kda: (me.kills + me.assists) / Math.max(1, me.deaths),
         killParticipation:
-            challenges.killParticipation ??
-            share(me.kills + me.assists, team.kills),
+            challenges.killParticipation ?? share(me.kills + me.assists, team.kills),
         deathShare: share(me.deaths, team.deaths),
 
         cs,

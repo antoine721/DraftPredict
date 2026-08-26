@@ -25,10 +25,7 @@ export type RiotFetchInit = {
 };
 
 /** Structural subset of `fetch`; the global `fetch` satisfies it. */
-export type RiotFetch = (
-    url: string,
-    init: RiotFetchInit,
-) => Promise<RiotResponseLike>;
+export type RiotFetch = (url: string, init: RiotFetchInit) => Promise<RiotResponseLike>;
 
 export type LogMeta = Record<string, unknown>;
 
@@ -212,7 +209,11 @@ export class RiotHttpClient {
         return spec.ttlMs ?? this.ttls[spec.method] ?? 0;
     }
 
-    /** GETs `spec.url`, returning parsed JSON. Throws typed Riot errors. */
+    /**
+     * GETs `spec.url`, returning parsed JSON. Throws typed Riot errors.
+     *
+     * Cached values are returned by reference — treat them as read-only.
+     */
     async request<T>(spec: RiotRequestSpec): Promise<T> {
         const cacheKey = spec.cacheKey ?? `${spec.method} ${spec.url}`;
         const ttl = this.ttlFor(spec);
@@ -393,10 +394,7 @@ export class RiotHttpClient {
             return new RiotAuthError(base);
         }
         if (response.status === 404) {
-            return new RiotNotFoundError(
-                `Riot API: not found (${spec.method})`,
-                base,
-            );
+            return new RiotNotFoundError(`Riot API: not found (${spec.method})`, base);
         }
         if (response.status === 429) {
             return new RiotRateLimitError({

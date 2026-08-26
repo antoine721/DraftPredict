@@ -71,7 +71,10 @@ class TokenBucket {
     private refill(now: number): void {
         if (now <= this.updatedAt) return;
         const perMs = this.rule.requests / (this.rule.seconds * 1000);
-        this.tokens = Math.min(this.rule.requests, this.tokens + (now - this.updatedAt) * perMs);
+        this.tokens = Math.min(
+            this.rule.requests,
+            this.tokens + (now - this.updatedAt) * perMs,
+        );
         this.updatedAt = now;
     }
 
@@ -183,7 +186,10 @@ export class RateLimiter {
      * method, for a method limit) for `seconds` and empties the matching
      * buckets so the next window starts clean.
      */
-    penalize(seconds: number, scope: { method?: string; scope?: "application" | "method" } = {}): void {
+    penalize(
+        seconds: number,
+        scope: { method?: string; scope?: "application" | "method" } = {},
+    ): void {
         const now = this.now();
         const until = now + Math.max(0, seconds) * 1000;
         if (scope.scope === "method" && scope.method) {

@@ -48,9 +48,7 @@ function fromLaneAndRole(
     const laneName = clean(lane);
     const roleName = clean(role);
     const supportish =
-        roleName === "support" ||
-        roleName === "duo_support" ||
-        roleName === "utility";
+        roleName === "support" || roleName === "duo_support" || roleName === "utility";
 
     if (laneName === "bottom" || laneName === "bot") {
         return supportish ? Role.Support : Role.Bottom;
@@ -90,9 +88,9 @@ export function assignTeamRoles<T>(
         assigned.set(player, role);
     }
 
-    const free = ([Role.Top, Role.Jungle, Role.Middle, Role.Bottom, Role.Support] as Role[]).filter(
-        (role) => !taken.has(role),
-    );
+    const free = (
+        [Role.Top, Role.Jungle, Role.Middle, Role.Bottom, Role.Support] as Role[]
+    ).filter((role) => !taken.has(role));
     leftovers.forEach((player, index) => {
         const role = free[index];
         if (role === undefined) return;

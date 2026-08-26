@@ -145,9 +145,9 @@ describe("summarizeMatch", () => {
         );
         const participants = makeMatch().info.participants;
         participants[0]!.gameEndedInEarlySurrender = true;
-        expect(
-            summarizeMatch(makeMatch({ participants }), "puuid-1").remake,
-        ).toBe(true);
+        expect(summarizeMatch(makeMatch({ participants }), "puuid-1").remake).toBe(
+            true,
+        );
         expect(summarizeMatch(makeMatch(), "puuid-1").remake).toBe(false);
     });
 

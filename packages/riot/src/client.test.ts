@@ -94,8 +94,20 @@ describe("summoner-v4, league-v4 and mastery", () => {
 
     it("splits ranked entries into solo and flex", async () => {
         const entries = [
-            { queueType: "RANKED_FLEX_SR", tier: "GOLD", leaguePoints: 10, wins: 5, losses: 5 },
-            { queueType: "RANKED_SOLO_5x5", tier: "EMERALD", leaguePoints: 42, wins: 60, losses: 40 },
+            {
+                queueType: "RANKED_FLEX_SR",
+                tier: "GOLD",
+                leaguePoints: 10,
+                wins: 5,
+                losses: 5,
+            },
+            {
+                queueType: "RANKED_SOLO_5x5",
+                tier: "EMERALD",
+                leaguePoints: 42,
+                wins: 60,
+                losses: 40,
+            },
         ];
         const { client, fetch } = makeClient([{ body: entries }]);
         const ranks = await client.league.ranksByPuuid("p1");
@@ -127,7 +139,11 @@ describe("match-v5", () => {
         expect(lastUrl(fetch)).toBe(
             "https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/p1/ids?start=0&count=20&queue=420",
         );
-        await client.match.idsByPuuid("p1", { count: 5, type: "ranked", startTime: 1700 });
+        await client.match.idsByPuuid("p1", {
+            count: 5,
+            type: "ranked",
+            startTime: 1700,
+        });
         expect(lastUrl(fetch)).toBe(
             "https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/p1/ids?count=5&type=ranked&startTime=1700",
         );

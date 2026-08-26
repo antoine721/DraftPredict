@@ -63,8 +63,7 @@ export const ARCHETYPES: readonly ArchetypeDefinition[] = [
             aggression: -0.2,
         },
         bias: 0,
-        summary:
-            "You farm safely, avoid early risk and let the game come to you.",
+        summary: "You farm safely, avoid early risk and let the game come to you.",
     },
     {
         key: "playmaker",
@@ -127,10 +126,7 @@ export const ARCHETYPES: readonly ArchetypeDefinition[] = [
     },
 ];
 
-function scoreArchetype(
-    definition: ArchetypeDefinition,
-    axes: AxisScores,
-): number {
+function scoreArchetype(definition: ArchetypeDefinition, axes: AxisScores): number {
     let score = definition.bias;
     for (const [axis, weight] of Object.entries(definition.weights) as [
         PlaystyleAxis,

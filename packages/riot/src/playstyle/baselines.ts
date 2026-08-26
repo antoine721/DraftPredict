@@ -187,9 +187,6 @@ export function clampScore(value: number): number {
     return Math.min(100, Math.max(0, value));
 }
 
-export function baselineFor(
-    baselines: PlaystyleBaselines,
-    role: Role,
-): RoleBaseline {
+export function baselineFor(baselines: PlaystyleBaselines, role: Role): RoleBaseline {
     return baselines[role] ?? baselines[Role.Middle];
 }

@@ -187,7 +187,9 @@ function bucketStats(games: readonly AnalyzedGame[]): {
 }
 
 /** The six metric axes for a set of games (no consistency/scaling). */
-export function computeMetricAxes(games: readonly AnalyzedGame[]): Record<MetricAxis, number> {
+export function computeMetricAxes(
+    games: readonly AnalyzedGame[],
+): Record<MetricAxis, number> {
     const normalized = averageMetrics(games.map((game) => game.normalized));
     const scores = {} as Record<MetricAxis, number>;
     for (const axis of METRIC_AXES) {
@@ -230,7 +232,9 @@ export function computeAxisDetails(games: readonly AnalyzedGame[]): {
         const weights = AXIS_METRIC_WEIGHTS[axis];
         const inputs = toInputs(weights, rawAverage, normalizedAverage);
         const score =
-            games.length === 0 ? 50 : clampScore(weightedScore(normalizedAverage, weights));
+            games.length === 0
+                ? 50
+                : clampScore(weightedScore(normalizedAverage, weights));
         axes[axis] = score;
         details[axis] = {
             axis,

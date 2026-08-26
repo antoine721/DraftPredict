@@ -107,10 +107,7 @@ describe("RiotHttpClient", () => {
     });
 
     it("recovers when a retried 5xx succeeds", async () => {
-        const { client, fetch } = makeClient([
-            { status: 500 },
-            { body: { ok: 1 } },
-        ]);
+        const { client, fetch } = makeClient([{ status: 500 }, { body: { ok: 1 } }]);
         await expect(
             client.request({ method: "match-v5.byId", url: URL }),
         ).resolves.toEqual({ ok: 1 });
@@ -161,7 +158,12 @@ describe("RiotHttpClient", () => {
 
     it("scopes a method rate limit to that method", async () => {
         const { client } = makeClient(
-            [{ status: 429, headers: { "retry-after": "2", "x-rate-limit-type": "method" } }],
+            [
+                {
+                    status: 429,
+                    headers: { "retry-after": "2", "x-rate-limit-type": "method" },
+                },
+            ],
             { maxRetries: 0 },
         );
         await client

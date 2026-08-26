@@ -1,0 +1,14 @@
+{
+  "name": "@draftpredict/data",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+    "./assets/*": "./assets/*"
+  },
+  "files": ["dist", "assets"],
+  "scripts": { "build": "tsc -b", "typecheck": "tsc --noEmit -p tsconfig.json" },
+  "dependencies": { "@draftpredict/core": "*" }
+}

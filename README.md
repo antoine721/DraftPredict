@@ -31,6 +31,19 @@ Ouvrez http://localhost:5173. **Aucune clé API n'est nécessaire** pour la draf
 en temps réel : il suffit que le client League of Legends tourne sur la même
 machine.
 
+## Utilisation quotidienne
+
+En mode production, un seul processus sert l'API **et** l'interface :
+
+```bash
+npm run build
+npm start            # tout sur http://localhost:4700
+```
+
+C'est ce mode que lance l'application de bureau. Les liens profonds
+(`/champions/266`, `/parametres`, une draft partagée) sont servis correctement :
+le serveur retombe sur l'application quand l'URL n'est pas une route d'API.
+
 ## Tester
 
 ```bash

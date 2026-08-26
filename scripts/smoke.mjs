@@ -201,7 +201,14 @@ await step("Builds (objets, runes, sorts, competences)", async () => {
 let lcu;
 await step("Client League of Legends", async () => {
     lcu = expectOk(await call("/api/lcu/status"), "/api/lcu/status");
-    if (!lcu.enabled) throw new Error("integration desactivee (DRAFTPREDICT_LCU=0)");
+    // A disabled integration is a configuration choice, not a malfunction:
+    // report it as skipped so the run does not fail on a deliberate setting.
+    if (!lcu.enabled) {
+        return skip(
+            "Client League of Legends",
+            "integration desactivee - reactivez-la dans les parametres (ou retirez DRAFTPREDICT_LCU=0)",
+        );
+    }
     if (!lcu.connected) {
         return `${C.yellow}non connecte${C.reset}${C.dim} - lancez le client LoL puis relancez`;
     }

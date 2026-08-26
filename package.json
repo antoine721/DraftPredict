@@ -1,34 +1,45 @@
 {
-  "name": "draftpredict",
-  "private": true,
-  "version": "0.1.0",
-  "type": "module",
-  "description": "League of Legends draft companion: real-time champ select predictions, builds and playstyle analysis",
-  "engines": { "node": ">=20" },
-  "workspaces": ["packages/*", "apps/*"],
-  "scripts": {
-    "typecheck": "tsc -b tsconfig.build.json",
-    "build": "npm run build --workspaces --if-present",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "lint": "eslint .",
-    "format": "prettier --write .",
-    "dev": "concurrently -n server,web -c cyan,magenta \"npm:dev:server\" \"npm:dev:web\"",
-    "dev:server": "npm run dev -w @draftpredict/server",
-    "dev:web": "npm run dev -w @draftpredict/web",
-    "start": "npm run start -w @draftpredict/server",
-    "desktop": "npm run dev -w @draftpredict/desktop",
-    "pipeline": "npm run start -w @draftpredict/pipeline"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.39.0",
-    "@types/node": "^22.10.2",
-    "concurrently": "^9.1.0",
-    "eslint": "^9.39.0",
-    "prettier": "^3.4.2",
-    "tsx": "^4.19.2",
-    "typescript": "^5.7.2",
-    "typescript-eslint": "^8.19.0",
-    "vitest": "^2.1.8"
-  }
+    "name": "draftpredict",
+    "private": true,
+    "version": "0.1.0",
+    "type": "module",
+    "description": "League of Legends draft companion: real-time champ select predictions, builds and playstyle analysis",
+    "engines": {
+        "node": ">=20"
+    },
+    "workspaces": [
+        "packages/*",
+        "apps/*"
+    ],
+    "scripts": {
+        "typecheck": "tsc -b tsconfig.build.json",
+        "build": "npm run build --workspaces --if-present",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "lint": "eslint .",
+        "format": "prettier --write .",
+        "dev": "concurrently -n server,web -c cyan,magenta \"npm:dev:server\" \"npm:dev:web\"",
+        "dev:server": "npm run dev -w @draftpredict/server",
+        "dev:web": "npm run dev -w @draftpredict/web",
+        "start": "npm run start -w @draftpredict/server",
+        "desktop": "npm run dev -w @draftpredict/desktop",
+        "pipeline": "npm run start -w @draftpredict/pipeline",
+        "smoke": "node scripts/smoke.mjs",
+        "build:packages": "tsc -b packages/core packages/data packages/riot packages/lcu",
+        "prepare": "npm run build:packages",
+        "predev": "npm run build:packages",
+        "predev:server": "npm run build:packages",
+        "prepipeline": "npm run build:packages"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.39.0",
+        "@types/node": "^22.10.2",
+        "concurrently": "^9.1.0",
+        "eslint": "^9.39.0",
+        "prettier": "^3.4.2",
+        "tsx": "^4.19.2",
+        "typescript": "^5.7.2",
+        "typescript-eslint": "^8.19.0",
+        "vitest": "^2.1.8"
+    }
 }

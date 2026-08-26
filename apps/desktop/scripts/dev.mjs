@@ -1,4 +1,3 @@
-/* global process */
 /**
  * `npm run dev -w @draftpredict/desktop`.
  *

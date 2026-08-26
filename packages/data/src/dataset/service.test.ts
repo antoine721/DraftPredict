@@ -183,8 +183,29 @@ describe("DatasetService caching", () => {
         const entry = await restarted.getEntry(params);
 
         expect(entry.source).toBe("disk");
-        expect(entry.provider).toBe("disk-cache");
+        // The cache remembers where the bytes came from, so a warm start cannot
+        // launder an offline fixture into data that looks live.
+        expect(entry.provider).toBe("p");
         expect(provider.calls).toHaveLength(1);
+    });
+
+    it("falls back to disk-cache as the provider for entries written before provenance was tracked", async () => {
+        const provider = stubProvider("p", async () => fixture(1));
+        const service = new DatasetService({ providers: [provider], cacheDir });
+        await service.get(params);
+
+        // Rewrite the entry without `meta`, as an older build would have.
+        const { readFileSync, writeFileSync } = await import("node:fs");
+        const file = join(cacheDir, `${datasetCacheKey(params)}.json`);
+        const record = JSON.parse(readFileSync(file, "utf8"));
+        delete record.meta;
+        writeFileSync(file, JSON.stringify(record));
+
+        const restarted = new DatasetService({ providers: [provider], cacheDir });
+        const entry = await restarted.getEntry(params);
+
+        expect(entry.source).toBe("disk");
+        expect(entry.provider).toBe("disk-cache");
     });
 
     it("survives a corrupt disk cache entry", async () => {

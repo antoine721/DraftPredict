@@ -18,10 +18,10 @@ Dernière mise à jour : 2026-08-26 (projet stabilisé, prêt pour une pull requ
 | `packages/lcu` — client League (temps réel) | ✅ complet | 224 tests |
 | `apps/server` — Fastify REST + WebSocket | ✅ complet | 56 tests, serveur démarré et routes vérifiées à la main |
 | `apps/pipeline` — construction de datasets | ✅ complet | 73 tests |
-| `apps/web` — shell, design system, hooks, store | ✅ complet | 118 tests, bundle construit (356 kB / 113 kB gzip) |
+| `apps/web` — application complète (5 vues) | ✅ complet | 486 tests, bundle construit |
 | `apps/desktop` — enveloppe Electron | ✅ complet (non empaqueté) | 15 tests |
 
-**Total : 1653 tests passants, `tsc -b` et `eslint` propres sur tout le monorepo.**
+**Total : 2024 tests passants, `tsc -b` et `eslint` propres sur tout le monorepo.**
 
 Commandes de vérification :
 
@@ -41,39 +41,11 @@ npm run smoke          # dans un autre — rapport lisible, code de sortie non n
 
 ## 2. Ce qu'il RESTE à faire
 
-### 2.1 Les 5 vues de l'interface — **le seul vrai reste**
+### 2.1 Les 5 vues de l'interface — **terminées**
 
-`apps/web/src/views/*.tsx` contiennent aujourd'hui des **placeholders** (un
-`Panel` chacun). Toute la plomberie existe déjà : primitives UI, hooks de
-requête, WebSocket temps réel, store de draft, routage. Il ne reste qu'à écrire
-le rendu.
-
-Chaque vue doit être écrite dans son propre dossier `apps/web/src/views/<nom>/`
-et exporter le même nom de fichier/`default export` que le placeholder qu'elle
-remplace.
-
-1. **`DraftView`** — plateau 5v5 (colonnes alliée/ennemie + colonne d'analyse),
-   sélecteur de champion au clavier, jauge de probabilité de victoire,
-   répartition des contributions (champion / synergie / matchup), courbe de
-   winrate par durée, distribution des dégâts, suggestions par rôle libre,
-   suggestions de bans, mode « suivre le client » avec badge live et timer.
-2. **`ChampionsView`** — index des champions + page détail : items (starter /
-   core / bottes / situationnels), runes (arbre complet + shards), sorts
-   d'invocateur, ordre de compétences, matchups et synergies, stats par durée,
-   mode comparaison.
-3. **`AccountView`** — connexion par Riot ID **ou** détection automatique via le
-   client (sans clé API), rangs solo/flex, maîtrises, radar du style de jeu sur
-   8 axes + archétype + forces/faiblesses, pool de champions, historique avec
-   rejeu de la draft de chaque partie.
-4. **`LiveView`** — miroir du champ select en cours, partie en cours via
-   spectator, analyse de draft live, recherche d'un autre joueur.
-5. **`SettingsView`** — clé API Riot (masquée, test, suppression), région/rang,
-   niveau de risque, intégration client League, source des données, thème,
-   langue.
-
-Contrat complet de la fondation (primitives, hooks, store, règles d'honnêteté
-des données) : voir la section 4 ci-dessous et lire `apps/web/src/ui/index.ts`,
-`apps/web/src/api/`, `apps/web/src/state/`.
+Draft, Champions & Builds, Compte & style de jeu, Partie en cours et Paramètres
+sont implémentées, testées et vérifiées visuellement dans un navigateur.
+Il ne reste rien de provisoire dans `apps/web/src/views/`.
 
 ### 2.2 Corrections connues (petites, identifiées, non bloquantes)
 

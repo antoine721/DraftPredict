@@ -1,17 +1,7 @@
-import { Panel } from "../ui";
-import { ROUTES } from "../app/routes";
-
 /**
- * Placeholder — replaced by the Live view.
+ * Route entry point for `/live`.
  *
- * Foundation: `useLiveGame(puuid)` for spectator data plus its embedded draft
- * analysis, `useLiveChampSelect()` for champion select, `useLcuLiveStatus()`
- * for the client state.
+ * The screen itself lives in `views/live/`, split into focused components;
+ * this file only keeps the default export the router lazily imports.
  */
-export default function LiveView() {
-    return (
-        <Panel title={ROUTES.live.label} subtitle={ROUTES.live.description}>
-            <p className="text-sm text-ink-muted">Vue en cours de construction.</p>
-        </Panel>
-    );
-}
+export { default } from "./live/LiveView";

@@ -1,0 +1,5 @@
+# The repo-root .gitignore excludes `build/` (a common output directory name).
+# Here it is electron-builder's *input* directory — `directories.buildResources`
+# — so it must be tracked. Nested rules win over the parent's.
+!build/
+release/

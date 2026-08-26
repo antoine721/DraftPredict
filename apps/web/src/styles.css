@@ -1,0 +1,244 @@
+@import "tailwindcss";
+
+/*
+ * DraftPredict design tokens.
+ *
+ * Dark-first, League-flavoured: deep navy/slate surfaces, a single gold accent
+ * for anything actionable, blue/red for the two teams, and a diverging winrate
+ * scale (red at 45 %, neutral at 50 %, green at 55 %) that every number in the
+ * app is coloured with.
+ *
+ * Every token below is a real Tailwind utility: `bg-surface-1`, `text-gold`,
+ * `border-line`, `text-winrate-good`, `shadow-panel`, `rounded-panel`, …
+ */
+@theme {
+    /* ------------------------------------------------------------ fonts -- */
+    --font-sans:
+        "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+    --font-mono:
+        ui-monospace, "SFMono-Regular", "JetBrains Mono", "Fira Code", Menlo, monospace;
+    --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+    /* --------------------------------------------------------- surfaces -- */
+    /* 0 is the page, 4 the most raised element. */
+    --color-surface-0: #05070e;
+    --color-surface-1: #0a0e1a;
+    --color-surface-2: #101728;
+    --color-surface-3: #172137;
+    --color-surface-4: #1f2c47;
+    --color-surface-hover: #1a2540;
+    --color-surface-active: #22314f;
+
+    /* ------------------------------------------------------------- ink --- */
+    --color-ink: #e7ecf5;
+    --color-ink-strong: #ffffff;
+    --color-ink-muted: #9aa8c2;
+    --color-ink-subtle: #64748b;
+    --color-ink-inverse: #05070e;
+
+    /* --------------------------------------------------------- borders --- */
+    --color-line: #1e2a44;
+    --color-line-strong: #2b3b5c;
+    --color-line-soft: #141d31;
+
+    /* ------------------------------------------------------------ gold --- */
+    --color-gold: #c8aa6e;
+    --color-gold-bright: #f0e6d2;
+    --color-gold-soft: #d8bd83;
+    --color-gold-deep: #785a28;
+    --color-gold-ink: #1a1206;
+
+    /* ------------------------------------------------------------ teams -- */
+    --color-team-ally: #4f9fff;
+    --color-team-ally-deep: #12407e;
+    --color-team-ally-soft: #1b3557;
+    --color-team-enemy: #ff5c5c;
+    --color-team-enemy-deep: #7d1f22;
+    --color-team-enemy-soft: #4a1d22;
+
+    /* --------------------------------------------------------- winrate --- */
+    /* Diverging scale: 45 % or below is bad, 50 % neutral, 55 %+ good. */
+    --color-winrate-terrible: #e5484d;
+    --color-winrate-bad: #f0803c;
+    --color-winrate-neutral: #8b98ad;
+    --color-winrate-good: #4ac47a;
+    --color-winrate-great: #26d07c;
+
+    /* ---------------------------------------------------------- status --- */
+    --color-positive: #3fb950;
+    --color-negative: #e5484d;
+    --color-warning: #e2b341;
+    --color-info: #4f9fff;
+    --color-online: #2ee6a8;
+    --color-offline: #64748b;
+
+    /* ----------------------------------------------------------- radii --- */
+    --radius-panel: 0.875rem;
+    --radius-card: 0.625rem;
+    --radius-control: 0.5rem;
+
+    /* --------------------------------------------------------- shadows --- */
+    --shadow-panel: 0 18px 40px -24px rgb(0 0 0 / 0.9);
+    --shadow-pop: 0 24px 60px -20px rgb(0 0 0 / 0.85);
+    --shadow-glow-gold:
+        0 0 0 1px rgb(200 170 110 / 0.35), 0 0 24px -8px rgb(200 170 110 / 0.5);
+
+    /* ------------------------------------------------------ animations --- */
+    --animate-pulse-soft: pulse-soft 2.4s ease-in-out infinite;
+    --animate-rise: rise 180ms ease-out;
+    --animate-fade-in: fade-in 140ms ease-out;
+}
+
+/*
+ * Light theme. The app is designed dark-first; this keeps the "clair" setting
+ * of the Paramètres view honest instead of unreadable. Only the semantic
+ * tokens flip — every component keeps using the same utility names.
+ */
+[data-theme="light"] {
+    --color-surface-0: #f4f6fb;
+    --color-surface-1: #ffffff;
+    --color-surface-2: #eef1f8;
+    --color-surface-3: #e3e8f3;
+    --color-surface-4: #d7deee;
+    --color-surface-hover: #e6ebf6;
+    --color-surface-active: #dbe3f2;
+
+    --color-ink: #16203a;
+    --color-ink-strong: #05070e;
+    --color-ink-muted: #4d5b78;
+    --color-ink-subtle: #7b88a3;
+    --color-ink-inverse: #ffffff;
+
+    --color-line: #d3dae9;
+    --color-line-strong: #b8c2d8;
+    --color-line-soft: #e6eaf4;
+
+    --color-gold: #9a7b32;
+    --color-gold-bright: #7a5f22;
+    --color-gold-soft: #b3924a;
+    --color-gold-deep: #d8bd83;
+    --color-gold-ink: #ffffff;
+
+    --shadow-panel: 0 12px 30px -22px rgb(20 30 60 / 0.5);
+    --shadow-pop: 0 20px 50px -20px rgb(20 30 60 / 0.35);
+}
+
+@keyframes pulse-soft {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.45;
+    }
+}
+
+@keyframes rise {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@layer base {
+    :root {
+        color-scheme: dark;
+    }
+
+    [data-theme="light"] {
+        color-scheme: light;
+    }
+
+    * {
+        border-color: var(--color-line);
+    }
+
+    html,
+    body,
+    #root {
+        height: 100%;
+    }
+
+    body {
+        background-color: var(--color-surface-0);
+        color: var(--color-ink);
+        font-family: var(--font-sans);
+        font-feature-settings: "cv02", "cv03", "cv04", "tnum";
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+    }
+
+    /* A subtle rift-blue vignette so the deep background is not flat black. */
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        background:
+            radial-gradient(
+                60rem 40rem at 12% -10%,
+                rgb(79 159 255 / 0.09),
+                transparent 60%
+            ),
+            radial-gradient(
+                50rem 36rem at 92% 0%,
+                rgb(200 170 110 / 0.07),
+                transparent 62%
+            );
+    }
+
+    [data-theme="light"] body::before {
+        opacity: 0.5;
+    }
+
+    ::selection {
+        background-color: color-mix(in oklab, var(--color-gold) 35%, transparent);
+        color: var(--color-ink-strong);
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--color-gold);
+        outline-offset: 2px;
+    }
+
+    /* Numbers must never jitter when they update every 200 ms. */
+    .tabular {
+        font-variant-numeric: tabular-nums;
+    }
+}
+
+@layer utilities {
+    .scrollbar-slim {
+        scrollbar-width: thin;
+        scrollbar-color: var(--color-line-strong) transparent;
+    }
+
+    .scrollbar-slim::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    .scrollbar-slim::-webkit-scrollbar-thumb {
+        background-color: var(--color-line-strong);
+        border-radius: 9999px;
+    }
+
+    .scrollbar-slim::-webkit-scrollbar-track {
+        background: transparent;
+    }
+}

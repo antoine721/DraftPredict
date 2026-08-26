@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="default-src 'none'; style-src 'unsafe-inline'"
+        />
+        <title>DraftPredict</title>
+        <style>
+            :root { color-scheme: dark; }
+            body {
+                margin: 0; height: 100vh; display: grid; place-items: center;
+                background: #0b0f19; color: #e6ecf8;
+                font: 15px/1.6 system-ui, "Segoe UI", Roboto, sans-serif;
+            }
+            main { max-width: 46rem; padding: 2rem; }
+            h1 { font-size: 1.4rem; margin: 0 0 1rem; }
+            code {
+                background: #131a2a; border: 1px solid #222d45; border-radius: 6px;
+                padding: 0.15rem 0.4rem; font-family: ui-monospace, Menlo, Consolas, monospace;
+            }
+            p { color: #8b98b4; }
+        </style>
+    </head>
+    <body>
+        <main>
+            <h1>Interface non compilée</h1>
+            <p>
+                Le serveur local tourne, mais le bundle de l'interface
+                (<code>apps/web/dist</code>) est introuvable. Compilez-le puis
+                relancez l'application :
+            </p>
+            <p><code>npm run build -w @draftpredict/web</code></p>
+            <p>
+                En développement, lancez plutôt
+                <code>npm run dev -w @draftpredict/web</code> et démarrez la
+                coquille avec <code>DRAFTPREDICT_DEV=1</code>.
+            </p>
+        </main>
+    </body>
+</html>

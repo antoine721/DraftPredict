@@ -11,5 +11,6 @@ coverage/
 .turbo/
 apps/desktop/release/
 apps/web/dist/
+apps/web/dist-types/
 data-cache/
 *.log

@@ -23,8 +23,22 @@ const gunzipAsync = promisify(gunzip);
 
 export const DRAFTGAP_BUCKET_URL = "https://bucket.draftgap.com";
 
-/** The 30-day dataset lives under a fixed path segment rather than a patch. */
-export const DRAFTGAP_FULL_WINDOW_SEGMENT = "30";
+/**
+ * The two files the bucket actually serves.
+ *
+ * DraftGap's own client fetches exactly these, as plain JSON:
+ * `datasets/v5/current-patch.json` and `datasets/v5/30-days.json`.
+ * The bucket is NOT split by rank or region — one dataset covers everything,
+ * so `rank` and `region` are ignored by this provider. Anything that reports
+ * the active filter must say so rather than implying the data was filtered.
+ */
+export const DRAFTGAP_DATASET_NAMES = {
+    patch: "current-patch",
+    full: "30-days",
+} as const;
+
+/** Dataset schema version, matching the `v5` path segment DraftGap publishes. */
+export const DRAFTGAP_DATASET_VERSION = "5";
 
 export type DatasetFetch = (
     input: string,
@@ -71,8 +85,11 @@ export class DraftGapRemoteProvider implements DatasetProvider {
     }
 
     describe(): string {
-        return `Public DraftGap datasets from ${this.baseUrl}`;
+        return `Public DraftGap datasets from ${this.baseUrl} (all ranks and regions combined)`;
     }
+
+    /** The public bucket serves one dataset for everyone; no rank filtering. */
+    readonly filtersByRank = false;
 
     /** URL this provider would request for `params`. */
     urlFor(params: DatasetParams): string {
@@ -203,19 +220,15 @@ export class DraftGapRemoteProvider implements DatasetProvider {
  * dataset under the patch itself, or `latest` when the caller does not pin one.
  */
 export function defaultBuildUrl(params: DatasetParams, baseUrl: string): string {
-    const windowSegment =
+    // Mirrors DraftGap's own client exactly: two files, plain JSON, no rank or
+    // region in the path. `params.rank`, `params.region` and `params.patch`
+    // have no effect here — the bucket publishes a single combined dataset.
+    const name =
         (params.window ?? "patch") === "full"
-            ? DRAFTGAP_FULL_WINDOW_SEGMENT
-            : (params.patch ?? "latest");
+            ? DRAFTGAP_DATASET_NAMES.full
+            : DRAFTGAP_DATASET_NAMES.patch;
 
-    return [
-        baseUrl,
-        "datasets",
-        "v5",
-        encodeURIComponent(windowSegment),
-        encodeURIComponent(params.region),
-        `${encodeURIComponent(params.rank)}.json.gz`,
-    ].join("/");
+    return `${baseUrl}/datasets/v${DRAFTGAP_DATASET_VERSION}/${name}.json`;
 }
 
 /** gzip files start with 0x1f 0x8b. */

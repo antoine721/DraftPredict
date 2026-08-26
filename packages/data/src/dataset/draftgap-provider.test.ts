@@ -44,16 +44,19 @@ function respond(body: Buffer, status = 200) {
 describe("DraftGapRemoteProvider", () => {
     it("builds the documented bucket url", () => {
         expect(defaultBuildUrl(params, DRAFTGAP_BUCKET_URL)).toBe(
-            "https://bucket.draftgap.com/datasets/v5/latest/EUW/PLATINUM_PLUS.json.gz",
+            "https://bucket.draftgap.com/datasets/v5/current-patch.json",
         );
         expect(
             defaultBuildUrl({ ...params, window: "full" }, DRAFTGAP_BUCKET_URL),
-        ).toBe("https://bucket.draftgap.com/datasets/v5/30/EUW/PLATINUM_PLUS.json.gz");
+        ).toBe("https://bucket.draftgap.com/datasets/v5/30-days.json");
+        // The bucket publishes one combined dataset: rank, region and patch
+        // are accepted but cannot change what is served.
         expect(
-            defaultBuildUrl({ ...params, patch: "16.17" }, DRAFTGAP_BUCKET_URL),
-        ).toBe(
-            "https://bucket.draftgap.com/datasets/v5/16.17/EUW/PLATINUM_PLUS.json.gz",
-        );
+            defaultBuildUrl(
+                { ...params, patch: "16.17", rank: "IRON", region: "KR" },
+                DRAFTGAP_BUCKET_URL,
+            ),
+        ).toBe("https://bucket.draftgap.com/datasets/v5/current-patch.json");
     });
 
     it("downloads, gunzips and validates a dataset", async () => {

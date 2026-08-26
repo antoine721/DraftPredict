@@ -1,4 +1,3 @@
-/* global console, process */
 /**
  * Post-build step: produce `dist/preload.mjs`.
  *

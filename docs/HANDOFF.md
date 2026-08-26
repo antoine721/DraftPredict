@@ -30,6 +30,13 @@ npm install
 npm run typecheck && npm run lint && npm run test && npm run build
 ```
 
+Test de bout en bout contre un serveur en cours d'exécution :
+
+```bash
+npm run dev            # dans un terminal
+npm run smoke          # dans un autre — rapport lisible, code de sortie non nul si échec
+```
+
 ---
 
 ## 2. Ce qu'il RESTE à faire
@@ -75,8 +82,12 @@ des données) : voir la section 4 ci-dessous et lire `apps/web/src/ui/index.ts`,
   **corrigé** : le cache mémorise désormais le provider d'origine
   (`DiskCacheRecord.meta`) et `DatasetService` le restaure à la lecture, en
   gardant `source: "disk"`. Vérifié à froid et à chaud.
-- **`eslint.config.js`** : ajouter `languageOptions.globals` pour `**/*.mjs`
-  (les scripts Electron ont dû déclarer `/* global process */` à la main).
+- ~~`eslint.config.js` sans globals Node pour les `**/*.mjs`~~ — **corrigé**,
+  les déclarations `/* global … */` manuelles ont été retirées.
+- ~~`npm run dev` échouait sur un dépôt fraîchement cloné~~ — **corrigé** :
+  `tsx` résolvait `@draftpredict/data` vers un `dist/` pas encore compilé. Les
+  hooks `prepare` / `predev` / `predev:server` / `prepipeline` construisent
+  désormais les packages avant tout ce qui les consomme.
 - **`GET /api/lcu/champ-select`** : n'inclut pas `updatedAt` hors champ select.
 - **Amélioration UX** : une route qui résout directement le summoner connecté au
   client en `puuid` éviterait l'étape « saisir son Riot ID » dans les vues

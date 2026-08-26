@@ -12,13 +12,13 @@ et analyse de votre style de jeu.
 
 ## Ce que fait l'application
 
-| | |
-|---|---|
-| **Draft en temps réel** | Connexion en lecture seule au client League of Legends (LCU) : les picks, bans et hovers des deux équipes arrivent automatiquement, la probabilité de victoire est recalculée à chaque changement. |
-| **Suggestions** | Pour chaque rôle allié encore libre, les champions classés par gain de winrate (matchups + synergies + méta), et les bans les plus rentables. |
-| **Builds optimaux** | Items (starter / core / bottes / situationnels), runes, sorts d'invocateur et ordre de compétences, avec winrate, écart à la moyenne et taille d'échantillon — adaptés au matchup. |
+|                           |                                                                                                                                                                                                                                                                |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Draft en temps réel**   | Connexion en lecture seule au client League of Legends (LCU) : les picks, bans et hovers des deux équipes arrivent automatiquement, la probabilité de victoire est recalculée à chaque changement.                                                             |
+| **Suggestions**           | Pour chaque rôle allié encore libre, les champions classés par gain de winrate (matchups + synergies + méta), et les bans les plus rentables.                                                                                                                  |
+| **Builds optimaux**       | Items (starter / core / bottes / situationnels), runes, sorts d'invocateur et ordre de compétences, avec winrate, écart à la moyenne et taille d'échantillon — adaptés au matchup.                                                                             |
 | **Compte & style de jeu** | Connexion via Riot ID ou détection automatique du compte connecté au client. Rang, maîtrises, historique, et un profil de style de jeu (agressivité, farm, vision, objectifs, survie, jeu d'équipe, régularité, scaling) avec archétype, forces et faiblesses. |
-| **Partie en cours** | Analyse de la draft d'une partie en cours (via spectator) pour vous ou n'importe quel joueur. |
+| **Partie en cours**       | Analyse de la draft d'une partie en cours (via spectator) pour vous ou n'importe quel joueur.                                                                                                                                                                  |
 
 ## Démarrage rapide
 
@@ -30,6 +30,29 @@ npm run dev          # serveur (4700) + interface web (5173)
 Ouvrez http://localhost:5173. **Aucune clé API n'est nécessaire** pour la draft
 en temps réel : il suffit que le client League of Legends tourne sur la même
 machine.
+
+> **État de l'interface** — les cinq vues (Draft, Champions & Builds, Compte,
+> Live, Paramètres) sont encore des écrans provisoires : le shell, le design
+> system, les hooks de données et le temps réel sont en place, mais le rendu des
+> vues reste à écrire (voir [`docs/HANDOFF.md`](docs/HANDOFF.md)). Le **backend
+> est complet** et se teste dès maintenant avec la commande ci-dessous.
+
+## Tester
+
+```bash
+npm run smoke                          # tout ce qui ne demande pas de clé
+npm run smoke -- --riot-id "Nom#TAG"   # + compte, rangs, historique, style de jeu
+npm run smoke -- --watch               # puis suit la draft en direct
+```
+
+Le script interroge le serveur en cours d'exécution et affiche un rapport :
+données statiques, source réelle du dataset, analyse de draft, suggestions de
+picks et de bans, builds, connexion au client League, compte Riot et WebSocket
+temps réel. Il sort en code non nul si une étape échoue, donc il est utilisable
+en CI ou en vérification après déploiement.
+
+La clé API n'est jamais lue ni transmise par le script : elle reste côté serveur,
+`--riot-id` demande simplement au serveur de s'en servir.
 
 Pour l'application de bureau (fenêtre dédiée + overlay + icône de barre système) :
 
@@ -59,7 +82,7 @@ DraftPredict lit les statistiques via une chaîne de fournisseurs, dans l'ordre 
 3. **Fixture embarquée** — dataset déterministe complet, pour un fonctionnement
    hors-ligne.
 
-L'interface indique toujours *quelle* source a réellement servi les données.
+L'interface indique toujours _quelle_ source a réellement servi les données.
 Les données statiques (champions, items, runes, sorts) sont embarquées
 (Data Dragon **16.17.1**) et se mettent à jour automatiquement quand un patch
 plus récent est disponible.

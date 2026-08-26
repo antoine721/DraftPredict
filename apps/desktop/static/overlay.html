@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="default-src 'none'; style-src 'unsafe-inline'; img-src https://ddragon.leagueoflegends.com data:; connect-src ws://127.0.0.1:* ws://localhost:*; script-src 'unsafe-inline'"
+        />
+        <title>DraftPredict — aperçu</title>
+        <style>
+            :root {
+                color-scheme: dark;
+                --bg: #0b0f19;
+                --panel: #131a2a;
+                --line: #222d45;
+                --text: #e6ecf8;
+                --muted: #8b98b4;
+                --good: #4ade80;
+                --bad: #f87171;
+                --accent: #60a5fa;
+            }
+            * { box-sizing: border-box; }
+            html, body { height: 100%; margin: 0; }
+            body {
+                background: var(--bg);
+                color: var(--text);
+                font: 13px/1.45 system-ui, "Segoe UI", Roboto, sans-serif;
+                display: flex;
+                flex-direction: column;
+                user-select: none;
+                overflow: hidden;
+            }
+            header {
+                -webkit-app-region: drag;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 8px 10px;
+                border-bottom: 1px solid var(--line);
+                font-size: 11px;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: var(--muted);
+            }
+            header .dot {
+                width: 8px; height: 8px; border-radius: 50%;
+                background: var(--bad); flex: none;
+            }
+            header.live .dot { background: var(--good); }
+            header .spacer { flex: 1; }
+            button {
+                -webkit-app-region: no-drag;
+                background: transparent;
+                border: 1px solid var(--line);
+                border-radius: 6px;
+                color: var(--muted);
+                cursor: pointer;
+                font: inherit;
+                padding: 2px 8px;
+            }
+            button:hover { color: var(--text); border-color: var(--accent); }
+            main { padding: 12px; display: flex; flex-direction: column; gap: 12px; min-height: 0; }
+            .gauge { text-align: center; }
+            .gauge .value { font-size: 40px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+            .gauge .label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
+            .bar { height: 6px; border-radius: 999px; background: var(--panel); overflow: hidden; margin-top: 8px; }
+            .bar > i { display: block; height: 100%; background: var(--accent); width: 50%; transition: width 0.25s ease; }
+            h2 {
+                font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;
+                color: var(--muted); margin: 0 0 6px;
+            }
+            ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; overflow-y: auto; }
+            li {
+                display: flex; align-items: center; gap: 8px;
+                background: var(--panel); border: 1px solid var(--line);
+                border-radius: 8px; padding: 5px 8px;
+            }
+            li img { width: 24px; height: 24px; border-radius: 5px; flex: none; background: #1b2333; }
+            li .name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+            li .role { color: var(--muted); font-size: 11px; }
+            li .delta { font-variant-numeric: tabular-nums; font-weight: 600; }
+            .delta.up { color: var(--good); }
+            .delta.down { color: var(--bad); }
+            footer {
+                margin-top: auto; padding: 6px 10px; border-top: 1px solid var(--line);
+                color: var(--muted); font-size: 11px;
+            }
+            .warn { color: #fbbf24; }
+        </style>
+    </head>
+    <body>
+        <header id="head">
+            <span class="dot"></span>
+            <span id="state">Connexion…</span>
+            <span class="spacer"></span>
+            <button id="hide" title="Masquer l'aperçu">✕</button>
+        </header>
+        <main>
+            <div class="gauge">
+                <div class="label">Probabilité de victoire</div>
+                <div class="value" id="winrate">—</div>
+                <div class="bar"><i id="bar"></i></div>
+            </div>
+            <section style="min-height: 0; display: flex; flex-direction: column">
+                <h2>Meilleurs picks</h2>
+                <ol id="suggestions">
+                    <li><span class="name">En attente du champ select…</span></li>
+                </ol>
+            </section>
+        </main>
+        <footer id="source">Serveur local</footer>
+        <script>
+            "use strict";
+            // Self-contained overlay: it speaks the documented /ws protocol
+            // directly, so it works with the main window closed. It reads and
+            // displays; it never sends anything to the League Client.
+            const params = new URLSearchParams(location.search);
+            const base = params.get("server") || "http://127.0.0.1:4700";
+            const head = document.getElementById("head");
+            const state = document.getElementById("state");
+            const winrateEl = document.getElementById("winrate");
+            const barEl = document.getElementById("bar");
+            const list = document.getElementById("suggestions");
+            const source = document.getElementById("source");
+            const ROLES = ["Top", "Jungle", "Mid", "Bot", "Support"];
+
+            document.getElementById("hide").addEventListener("click", () => {
+                if (window.draftpredict) window.draftpredict.overlay.control("hide");
+            });
+
+            function setStatus(text, live) {
+                state.textContent = text;
+                head.classList.toggle("live", Boolean(live));
+            }
+
+            function renderAnalysis(analysis) {
+                const winrate = analysis && analysis.result ? analysis.result.winrate : null;
+                if (typeof winrate === "number") {
+                    winrateEl.textContent = (winrate * 100).toFixed(1) + " %";
+                    barEl.style.width = Math.max(2, Math.min(98, winrate * 100)) + "%";
+                }
+                const meta = analysis && analysis.dataset;
+                if (meta) {
+                    source.textContent = meta.offline
+                        ? "Données de démonstration hors-ligne (" + meta.provider + ")"
+                        : meta.provider + " · " + (meta.date || "");
+                    source.className = meta.offline ? "warn" : "";
+                }
+            }
+
+            function renderSuggestions(suggestions) {
+                const best = (suggestions && suggestions.best) || [];
+                list.textContent = "";
+                if (best.length === 0) {
+                    const li = document.createElement("li");
+                    li.innerHTML = '<span class="name">Aucune suggestion</span>';
+                    list.appendChild(li);
+                    return;
+                }
+                for (const entry of best.slice(0, 5)) {
+                    const li = document.createElement("li");
+                    if (entry.icon) {
+                        const img = document.createElement("img");
+                        img.src = entry.icon;
+                        img.alt = "";
+                        img.addEventListener("error", () => img.remove());
+                        li.appendChild(img);
+                    }
+                    const name = document.createElement("span");
+                    name.className = "name";
+                    name.textContent = entry.name || entry.id || entry.key;
+                    li.appendChild(name);
+                    const role = document.createElement("span");
+                    role.className = "role";
+                    role.textContent = ROLES[entry.role] || "";
+                    li.appendChild(role);
+                    const delta = document.createElement("span");
+                    const value = (entry.winrateDelta || 0) * 100;
+                    delta.className = "delta " + (value >= 0 ? "up" : "down");
+                    delta.textContent = (value >= 0 ? "+" : "") + value.toFixed(1);
+                    li.appendChild(delta);
+                    list.appendChild(li);
+                }
+            }
+
+            let socket = null;
+            let retry = 500;
+
+            function connect() {
+                const url = base.replace(/^http/, "ws") + "/ws";
+                socket = new WebSocket(url);
+                // Listeners are attached synchronously: the hub sends `hello`
+                // and replays the current state the instant it accepts us.
+                socket.onmessage = (event) => {
+                    let message;
+                    try {
+                        message = JSON.parse(event.data);
+                    } catch {
+                        return;
+                    }
+                    switch (message.type) {
+                        case "hello":
+                            socket.send(
+                                JSON.stringify({
+                                    type: "subscribe",
+                                    topics: ["lcu", "champselect"],
+                                }),
+                            );
+                            setStatus("En attente du champ select", false);
+                            break;
+                        case "lcu:status":
+                            setStatus(
+                                message.status && message.status.connected
+                                    ? "Client League connecté"
+                                    : "Client League en attente",
+                                message.status && message.status.connected,
+                            );
+                            break;
+                        case "champselect:update":
+                            setStatus("Champ select", true);
+                            renderAnalysis(message.analysis);
+                            renderSuggestions(message.suggestions);
+                            break;
+                        case "champselect:end":
+                            setStatus("Champ select terminé", false);
+                            break;
+                        default:
+                            break;
+                    }
+                };
+                socket.onopen = () => {
+                    retry = 500;
+                };
+                socket.onclose = () => {
+                    setStatus("Serveur indisponible", false);
+                    retry = Math.min(retry * 2, 10000);
+                    setTimeout(connect, retry);
+                };
+                socket.onerror = () => socket.close();
+            }
+
+            connect();
+        </script>
+    </body>
+</html>

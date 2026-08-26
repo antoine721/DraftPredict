@@ -1,24 +1,15 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": "src"
-  },
-  "include": [
-    "src/**/*"
-  ],
-  "references": [
-    {
-      "path": "../../packages/core"
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "dist",
+        "rootDir": "src"
     },
-    {
-      "path": "../../packages/data"
-    },
-    {
-      "path": "../../packages/riot"
-    },
-    {
-      "path": "../../packages/lcu"
-    }
-  ]
+    "include": ["src/**/*"],
+    "exclude": ["**/*.test.ts", "src/testing/**", "dist"],
+    "references": [
+        { "path": "../../packages/core" },
+        { "path": "../../packages/data" },
+        { "path": "../../packages/riot" },
+        { "path": "../../packages/lcu" }
+    ]
 }

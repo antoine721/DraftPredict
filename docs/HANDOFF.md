@@ -147,6 +147,15 @@ Conventions à respecter (elles ont déjà mordu une fois) :
   `hasRiotApiKey` / `riotApiKeyPreview`.
 - Pas de jsdom : les tests de composants utilisent `renderToStaticMarkup`
   (`react-dom/server`) — modèle dans `apps/web/src/ui/design-system.test.tsx`.
+- **Jamais de motif `.gitignore` nu du type `build/`** : git le fait matcher à
+  n'importe quelle profondeur. Un tel motif a déjà avalé
+  `packages/core/src/models/build/`, rendant le dépôt incompilable après clone
+  alors que tout fonctionnait en local. Après un changement de `.gitignore`,
+  vérifier avec `git ls-files --others --ignored --exclude-standard`.
+- **Toute vérification « ça démarre » se fait dans un clone neuf**, pas dans le
+  répertoire de travail : `git clone`, `npm install`, `npm run typecheck && npm
+  run lint && npm run test && npm run build`, puis `npm run dev` + `npm run
+  smoke`. C'est le seul moyen d'attraper les fichiers manquants.
 
 Démarrage :
 

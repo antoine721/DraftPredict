@@ -714,6 +714,31 @@ expected, not an error to log loudly.
 `platform` (or its alias `region`) accepts a Riot routing value (`euw1`, `na1`,
 `kr`) or a region code (`EUW`, `NA`); it defaults to the configured platform.
 
+### `GET /api/account/me`
+
+**The one account route that needs no API key.** It resolves the account the
+local League client is logged in as, so the UI can skip the "type your Riot ID"
+step whenever the client is running.
+
+```json
+{
+  "puuid": "puuid-me",
+  "gameName": "Moi",
+  "tagLine": "EUW",
+  "displayName": "Moi",
+  "summonerLevel": 340,
+  "profileIconId": 4568,
+  "platform": "euw1",
+  "source": "lcu"
+}
+```
+
+- `404 LCU_NO_SUMMONER` — the client is not running or not logged in.
+- `409 LCU_DISABLED` — the client integration is switched off.
+
+The returned `puuid` feeds `/api/account/:puuid/profile`, `/matches`,
+`/playstyle` and `/live` directly — those still need the API key.
+
 ### `GET /api/account/lookup?riotId=Nom%23TAG&platform=euw1`
 
 ```json

@@ -29,7 +29,14 @@ export async function lcuRoutes(app: FastifyInstance): Promise<void> {
         return {
             inChampSelect: current !== null,
             status: ctx.lcu.status(),
-            ...(current ?? { state: null, analysis: null, suggestions: null }),
+            // Keep the shape stable whether or not a champ select is running:
+            // clients type `updatedAt` as always present.
+            ...(current ?? {
+                state: null,
+                analysis: null,
+                suggestions: null,
+                updatedAt: null,
+            }),
         };
     });
 }

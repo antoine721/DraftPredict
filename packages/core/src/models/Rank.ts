@@ -57,6 +57,9 @@ export function isRank(value: unknown): value is Rank {
 
 /** Parses a rank from a case-insensitive string, `undefined` when unknown. */
 export function parseRank(value: string): Rank | undefined {
-    const normalized = value.trim().toUpperCase().replace(/[\s-]+/g, "_");
+    const normalized = value
+        .trim()
+        .toUpperCase()
+        .replace(/[\s-]+/g, "_");
     return isRank(normalized) ? normalized : undefined;
 }

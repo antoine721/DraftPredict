@@ -61,7 +61,11 @@ interface Dataset {
 
 `Rank` = `ALL | IRON | BRONZE | SILVER | GOLD | PLATINUM | EMERALD | DIAMOND | MASTER | GRANDMASTER | CHALLENGER | PLATINUM_PLUS | DIAMOND_PLUS`.
 `Region` = `ALL | BR | EUNE | EUW | JP | KR | LAN | LAS | NA | OCE | RU | TR | PH | SG | TH | TW | VN | ME`.
-`RiskLevel` = `low | medium | high | veryHigh` → prior games `{low:2000, medium:500, high:100, veryHigh:20}`.
+`RiskLevel` = `very-low | low | medium | high | very-high` → prior games
+`{very-low:3000, low:2000, medium:1000, high:500, very-high:250}` (DraftGap's canonical
+values; build analysis uses `{3000,2000,1000,750,500}`). `parseRiskLevel()` accepts
+camelCase/underscore/space spellings, so wire formats may send `veryHigh` or `VERY_HIGH`;
+call it at every API boundary.
 
 ## packages/core — public API (pure functions, no fetch/fs)
 
@@ -80,7 +84,7 @@ getStats(dataset, championKey, role, type?: "duo"|"matchup", role2?, championKey
 analyzeDraft(dataset, fullDataset, team: Map<Role,string>, enemy: Map<Role,string>, config: AnalyzeDraftConfig): DraftResult
   // DraftResult { allyChampionRating, enemyChampionRating, allyDuoRating, enemyDuoRating, matchupRating, totalRating, winrate }
 analyzeChampion / analyzeChampions / analyzeDuos / analyzeMatchups
-getDraftResultWinrateByTime(dataset, draftResult, team, enemy): {duration:number, winrate:number}[]
+getDraftResultWinrateByTime(dataset, draftResult, team, enemy, config): {duration:number, winrate:number}[]
 
 // suggestions
 getSuggestions(dataset, fullDataset, team, enemy, config): Suggestion[]   // per open role, sorted by rating desc
@@ -192,3 +196,19 @@ npm run lint        # eslint 9 flat config
 npm run test        # vitest: unit + parity vs vendored DraftGap core
 npm run build       # all packages + web bundle
 ```
+
+## Conventions learned while building (binding for every package)
+
+- **Relative imports carry an explicit `.js` extension.** With
+  `moduleResolution: "Bundler"`, `tsc` emits extensionless specifiers that Node's
+  ESM loader cannot resolve, so `dist/` would not run. Every relative import in
+  `packages/*` and `apps/server|pipeline` must end in `.js`.
+- **Tests are excluded from `dist`** via `"exclude": ["**/*.test.ts", "src/testing/**", "dist"]`
+  in each package tsconfig, but are still typechecked by vitest and the root config.
+- `Role` exports both DraftGap names (`Top|Jungle|Middle|Bottom|Support`) and Riot
+  names (`TOP|JUNGLE|MIDDLE|BOTTOM|UTILITY`) as aliases of the same numeric values,
+  plus `riotPositionByRole` for LCU/Riot API mapping.
+- Matchup/synergy leaves keep DraftGap v5's minimal `{championKey, wins, games}`;
+  the positional fields are optional, so a raw v5 payload type-checks unchanged.
+- `@draftpredict/core` has **zero dependencies and zero I/O**. Anything that fetches,
+  reads a file or touches the network belongs in `data`, `riot`, `lcu` or an app.

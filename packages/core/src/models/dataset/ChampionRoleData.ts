@@ -1,8 +1,8 @@
-import type { Role } from "../Role";
-import type { Stats } from "../Stats";
-import type { ChampionDamageProfile } from "./ChampionDamageProfile";
-import type { ChampionMatchupData } from "./ChampionMatchupData";
-import type { ChampionSynergyData } from "./ChampionSynergyData";
+import type { Role } from "../Role.js";
+import type { Stats } from "../Stats.js";
+import type { ChampionDamageProfile } from "./ChampionDamageProfile.js";
+import type { ChampionMatchupData } from "./ChampionMatchupData.js";
+import type { ChampionSynergyData } from "./ChampionSynergyData.js";
 
 /** Number of game-duration buckets in {@link ChampionRoleData.statsByTime}. */
 export const TIME_BUCKET_COUNT = 7;
@@ -49,9 +49,7 @@ export function defaultChampionRoleData(): ChampionRoleData {
  * Strips the (very large) matchup and synergy maps in place. DraftGap does this
  * to the per-patch dataset, which only needs base winrates.
  */
-export function deleteChampionRoleDataMatchupSynergyData(
-    data: ChampionRoleData,
-): void {
+export function deleteChampionRoleDataMatchupSynergyData(data: ChampionRoleData): void {
     data.matchup = {} as ChampionRoleData["matchup"];
     data.synergy = {} as ChampionRoleData["synergy"];
 }

@@ -58,10 +58,7 @@ const roleByName = new Map<string, Role>([
 
 export function isRole(value: unknown): value is Role {
     return (
-        typeof value === "number" &&
-        Number.isInteger(value) &&
-        value >= 0 &&
-        value <= 4
+        typeof value === "number" && Number.isInteger(value) && value >= 0 && value <= 4
     );
 }
 

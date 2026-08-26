@@ -1,9 +1,9 @@
-import { ratingToWinrate, winrateToRating } from "../../rating/ratings";
-import type { ChampionData } from "./ChampionData";
-import { deleteChampionRoleDataMatchupSynergyData } from "./ChampionRoleData";
-import type { ItemData } from "./ItemData";
-import type { RuneData, RunePathData, StatShardData } from "./RuneData";
-import type { SummonerSpellData } from "./SummonerSpellData";
+import { ratingToWinrate, winrateToRating } from "../../rating/ratings.js";
+import type { ChampionData } from "./ChampionData.js";
+import { deleteChampionRoleDataMatchupSynergyData } from "./ChampionRoleData.js";
+import type { ItemData } from "./ItemData.js";
+import type { RuneData, RunePathData, StatShardData } from "./RuneData.js";
+import type { SummonerSpellData } from "./SummonerSpellData.js";
 
 /** DraftGap dataset format version this engine reads and writes. */
 export const DATASET_VERSION = "5";

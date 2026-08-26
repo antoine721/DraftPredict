@@ -1,4 +1,4 @@
-import type { Stats } from "../models/Stats";
+import type { Stats } from "../models/Stats.js";
 
 export function addStats(...stats: Stats[]): Stats {
     let wins = 0;

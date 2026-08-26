@@ -2,13 +2,7 @@
  * How aggressively the engine trusts small samples. A lower risk level uses
  * more prior games, pulling estimates towards the expected winrate.
  */
-export const RiskLevel = [
-    "very-low",
-    "low",
-    "medium",
-    "high",
-    "very-high",
-] as const;
+export const RiskLevel = ["very-low", "low", "medium", "high", "very-high"] as const;
 
 export type RiskLevel = (typeof RiskLevel)[number];
 
@@ -62,5 +56,10 @@ export function isRiskLevel(value: unknown): value is RiskLevel {
  * kebab-case risk level, or `undefined` when unrecognised.
  */
 export function parseRiskLevel(value: string): RiskLevel | undefined {
-    return ALIASES[value.trim().toLowerCase().replace(/[\s_-]+/g, "")];
+    return ALIASES[
+        value
+            .trim()
+            .toLowerCase()
+            .replace(/[\s_-]+/g, "")
+    ];
 }

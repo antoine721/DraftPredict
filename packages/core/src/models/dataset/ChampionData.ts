@@ -1,6 +1,6 @@
-import type { Role } from "../Role";
-import type { ChampionRoleData } from "./ChampionRoleData";
-import { defaultChampionRoleData } from "./ChampionRoleData";
+import type { Role } from "../Role.js";
+import type { ChampionRoleData } from "./ChampionRoleData.js";
+import { defaultChampionRoleData } from "./ChampionRoleData.js";
 
 export type ChampionData = {
     /** Data Dragon id, e.g. "MonkeyKing". */
@@ -12,11 +12,7 @@ export type ChampionData = {
     statsByRole: Record<Role, ChampionRoleData>;
 };
 
-export function defaultChampionData(
-    key: string,
-    id = key,
-    name = id,
-): ChampionData {
+export function defaultChampionData(key: string, id = key, name = id): ChampionData {
     return {
         id,
         key,

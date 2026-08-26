@@ -1,0 +1,13 @@
+{
+  "files": [],
+  "references": [
+    { "path": "packages/core" },
+    { "path": "packages/data" },
+    { "path": "packages/riot" },
+    { "path": "packages/lcu" },
+    { "path": "apps/server" },
+    { "path": "apps/pipeline" },
+    { "path": "apps/web" },
+    { "path": "apps/desktop" }
+  ]
+}

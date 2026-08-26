@@ -1,0 +1,32 @@
+{
+  "name": "@draftpredict/pipeline",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "start": "tsx src/main.ts",
+    "collect": "tsx src/main.ts collect",
+    "dataset": "tsx src/main.ts build",
+    "verify": "tsx src/main.ts verify",
+    "fixture": "tsx src/main.ts fixture"
+  },
+  "dependencies": {
+    "@draftpredict/core": "*",
+    "@draftpredict/data": "*",
+    "@draftpredict/riot": "*"
+  },
+  "description": "DraftPredict dataset builder: Riot match ingestion, aggregation and verification",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "draftpredict-pipeline": "dist/main.js"
+  }
+}

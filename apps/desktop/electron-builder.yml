@@ -1,0 +1,106 @@
+# electron-builder configuration for the DraftPredict desktop shell.
+#
+# NOTE: no binary was ever produced from this file in the development
+# container — Electron's prebuilt binaries cannot be downloaded there and
+# there are no signing identities. The configuration is written to be correct
+# and is documented in docs/DESKTOP.md; the first real packaging run on a
+# developer machine is what will prove it.
+
+appId: com.draftpredict.app
+productName: DraftPredict
+copyright: © DraftPredict — statistical engine ported from DraftGap (MIT)
+
+directories:
+    # build/icon.png is a generated placeholder (512x512). Replace it with the
+    # final artwork before shipping; electron-builder derives the .ico/.icns
+    # from it automatically.
+    buildResources: build
+    output: release
+
+# asar keeps the app in one archive (faster start, fewer stray files).
+asar: true
+asarUnpack:
+    # The bundled Data Dragon snapshot is read with plain fs calls, so keep it
+    # on disk rather than inside the archive.
+    - "**/node_modules/@draftpredict/data/assets/**"
+
+files:
+    - "dist/**/*"
+    - "static/**/*"
+    - "package.json"
+    - "!**/*.map"
+    - "!**/*.tsbuildinfo"
+    - "!**/__tests__/**"
+
+extraResources:
+    # The compiled web UI, served by the embedded server from
+    # `resources/web` (see `resolveWebRoot` in src/server.ts).
+    - from: "../web/dist"
+      to: "web"
+      filter: ["**/*"]
+
+# Workspace packages (@draftpredict/*) are symlinked into the repo-root
+# node_modules by npm workspaces; electron-builder follows those links and
+# copies the real files into the package.
+npmRebuild: false
+
+win:
+    target:
+        - target: nsis
+          arch: [x64]
+        - target: portable
+          arch: [x64]
+    icon: build/icon.png
+    artifactName: DraftPredict-${version}-win-${arch}-${ext}.${ext}
+
+nsis:
+    oneClick: false
+    perMachine: false
+    allowToChangeInstallationDirectory: true
+    createDesktopShortcut: true
+    createStartMenuShortcut: true
+    shortcutName: DraftPredict
+    deleteAppDataOnUninstall: false
+
+portable:
+    artifactName: DraftPredict-${version}-win-${arch}-portable.exe
+
+mac:
+    target:
+        - target: dmg
+          arch: [arm64, x64]
+    category: public.app-category.games
+    icon: build/icon.png
+    artifactName: DraftPredict-${version}-mac-${arch}.${ext}
+    # DraftPredict reads the League Client's local API over HTTPS on
+    # 127.0.0.1; no camera, microphone or accessibility entitlement is needed.
+    darkModeSupport: true
+    hardenedRuntime: true
+    gatekeeperAssess: false
+
+dmg:
+    artifactName: DraftPredict-${version}-mac-${arch}.dmg
+    contents:
+        - x: 130
+          y: 220
+        - x: 410
+          y: 220
+          type: link
+          path: /Applications
+
+linux:
+    target:
+        - target: AppImage
+          arch: [x64]
+    icon: build/icon.png
+    category: Game
+    synopsis: League of Legends draft companion
+    artifactName: DraftPredict-${version}-linux-${arch}.${ext}
+    desktop:
+        entry:
+            StartupWMClass: DraftPredict
+
+# No update feed is configured on purpose: the shell only auto-updates when
+# DRAFTPREDICT_UPDATE_FEED points at one (see src/updater.ts). Add a
+# `publish:` block here when a release channel exists.
+publish: null

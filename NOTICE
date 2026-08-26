@@ -1,0 +1,18 @@
+DraftPredict
+============
+
+The statistical draft-analysis engine in `packages/core` is a TypeScript port of
+DraftGap's core package.
+
+    DraftGap — https://github.com/vigovlugt/draftgap
+    Copyright (c) 2026 Vigo Vlugt
+    Licensed under the MIT License (see tests/reference/DRAFTGAP-LICENSE)
+
+`tests/reference/draftgap-core` contains an unmodified copy of DraftGap's core
+sources. It is used exclusively by the parity test-suite to prove that the
+ported engine reproduces DraftGap's results, and is not shipped in any build.
+
+League of Legends static data in `packages/data/assets/ddragon` comes from Riot
+Games' Data Dragon. DraftPredict isn't endorsed by Riot Games and doesn't
+reflect the views or opinions of Riot Games or anyone officially involved in
+producing or managing Riot Games properties.

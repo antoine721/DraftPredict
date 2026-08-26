@@ -1,0 +1,14 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "dist",
+        "rootDir": "src"
+    },
+    "include": ["src/**/*"],
+    "exclude": ["**/*.test.ts", "src/testing/**", "dist"],
+    "references": [
+        { "path": "../../packages/core" },
+        { "path": "../../packages/data" },
+        { "path": "../../packages/riot" }
+    ]
+}

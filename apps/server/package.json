@@ -1,0 +1,23 @@
+{
+  "name": "@draftpredict/server",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "dev": "tsx watch src/main.ts",
+    "start": "node dist/main.js"
+  },
+  "dependencies": {
+    "@draftpredict/core": "*",
+    "@draftpredict/data": "*",
+    "@draftpredict/lcu": "*",
+    "@draftpredict/riot": "*",
+    "@fastify/cors": "^10.0.1",
+    "@fastify/static": "^8.0.3",
+    "@fastify/websocket": "^11.0.1",
+    "fastify": "^5.2.0",
+    "zod": "^3.24.1"
+  }
+}

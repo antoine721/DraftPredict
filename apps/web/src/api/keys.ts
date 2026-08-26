@@ -67,6 +67,7 @@ export const queryKeys = {
 
     account: {
         all: ["account"] as const,
+        me: ["account", "me"] as const,
         lookup: (riotId: string, platform?: string) =>
             ["account", "lookup", riotId, platform ?? null] as const,
         profile: (puuid: string, platform?: string) =>

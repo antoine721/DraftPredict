@@ -31,12 +31,6 @@ Ouvrez http://localhost:5173. **Aucune clé API n'est nécessaire** pour la draf
 en temps réel : il suffit que le client League of Legends tourne sur la même
 machine.
 
-> **État de l'interface** — les cinq vues (Draft, Champions & Builds, Compte,
-> Live, Paramètres) sont encore des écrans provisoires : le shell, le design
-> system, les hooks de données et le temps réel sont en place, mais le rendu des
-> vues reste à écrire (voir [`docs/HANDOFF.md`](docs/HANDOFF.md)). Le **backend
-> est complet** et se teste dès maintenant avec la commande ci-dessous.
-
 ## Tester
 
 ```bash

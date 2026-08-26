@@ -1,6 +1,7 @@
 import { ApiError, parseErrorBody } from "./errors";
 import type {
     AccountLookupResponse,
+    AccountMeResponse,
     AnalyzePayload,
     BansPayload,
     BansRequest,
@@ -209,6 +210,7 @@ export const api = {
 
     account: {
         /** `riotId` is `"Nom#TAG"`; the `#` is encoded here. */
+        me: (options?: RequestOptions) => get<AccountMeResponse>("/api/account/me", options),
         lookup: (riotId: string, platform?: string, options?: RequestOptions) =>
             get<AccountLookupResponse>(
                 `/api/account/lookup${buildQuery({ riotId, platform })}`,

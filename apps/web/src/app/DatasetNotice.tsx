@@ -52,14 +52,17 @@ export function DatasetNotice({
                 className,
             )}
             role="note"
+            // The server's provider description is technical and English; it
+            // belongs in a tooltip, not inside a French sentence.
+            title={source?.description ?? undefined}
         >
             <FlaskConical className="mt-0.5 h-3.5 w-3.5 shrink-0" />
             <p className="min-w-0">
                 <span className="font-semibold">
                     Données de démonstration hors-ligne.
                 </span>{" "}
-                {source?.description ??
-                    "Les statistiques affichées proviennent d'un jeu de données synthétique généré localement"}
+                Les statistiques affichées proviennent d'un jeu de données
+                synthétique généré localement
                 {dataset ? ` (${formatDatasetDate(dataset.date)})` : ""} : elles sont
                 cohérentes mais ne reflètent pas les vraies statistiques de la saison.
             </p>

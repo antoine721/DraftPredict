@@ -1,5 +1,5 @@
 import { Suspense, lazy, useState } from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { LiveSocketProvider } from "../api/live";
 import { createQueryClient } from "../api/queries";
@@ -45,6 +45,17 @@ function NotFoundView() {
     );
 }
 
+/**
+ * `/` redirects to the draft board, carrying the query string with it.
+ *
+ * A shared draft link is just the board state in the query (`?ally=…&enemy=…`),
+ * so dropping it here would silently hand the recipient an empty board.
+ */
+function IndexRedirect() {
+    const { search, hash } = useLocation();
+    return <Navigate to={`${ROUTES.draft.path}${search}${hash}`} replace />;
+}
+
 export function App() {
     // One client for the lifetime of the app, created lazily so StrictMode's
     // double render does not build two caches.
@@ -58,7 +69,7 @@ export function App() {
                         <Route element={<AppLayout />}>
                             <Route
                                 index
-                                element={<Navigate to={ROUTES.draft.path} replace />}
+                                element={<IndexRedirect />}
                             />
                             <Route
                                 path={ROUTES.draft.path}

@@ -12,6 +12,7 @@ import { ApiError, isApiError } from "./errors";
 import { queryKeys } from "./keys";
 import type {
     AccountLookupResponse,
+    AccountMeResponse,
     AnalyzePayload,
     BansPayload,
     BansRequest,
@@ -511,6 +512,25 @@ export function useLiveGame(
         refetchInterval: pollMs ?? 30_000,
         ...rest,
     });
+}
+
+/**
+ * The account the local League client is logged in as.
+ *
+ * The one account route that needs no Riot API key, which is how a player can
+ * connect in a single click. `404 LCU_NO_SUMMONER` and `409 LCU_DISABLED` are
+ * part of its contract, so they are rendered as states and never retried.
+ */
+export function useAccountMe(options?: QueryTweaks<AccountMeResponse>) {
+    return useQuery<AccountMeResponse, ApiError, AccountMeResponse, readonly unknown[]>(
+        {
+            queryKey: queryKeys.account.me,
+            queryFn: ({ signal }) => api.account.me({ signal }),
+            staleTime: 30_000,
+            retry: false,
+            ...options,
+        },
+    );
 }
 
 // --------------------------------------------------------------------- LCU ---

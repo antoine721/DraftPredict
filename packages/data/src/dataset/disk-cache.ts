@@ -22,6 +22,12 @@ export type DiskCacheRecord<V> = {
     storedAt: number;
     expiresAt: number | null;
     value: V;
+    /**
+     * Free-form provenance kept alongside the value. Callers use it to remember
+     * where the cached bytes originally came from, so a cache hit does not
+     * launder a synthetic fixture into apparently-real data.
+     */
+    meta?: Record<string, unknown>;
 };
 
 export type DiskCacheOptions = {
@@ -75,12 +81,17 @@ export class DiskCache {
      * Async twin of {@link DiskCache.write}. Datasets are large enough that
      * writing them synchronously would stall a server mid-request.
      */
-    async writeAsync<V>(key: string, value: V, ttlMs = this.ttlMs): Promise<void> {
+    async writeAsync<V>(
+        key: string,
+        value: V,
+        ttlMs = this.ttlMs,
+        meta?: Record<string, unknown>,
+    ): Promise<void> {
         try {
             ensureDir(this.dir);
             await writeJsonFileAtomicAsync(
                 this.pathFor(key),
-                this.record(key, value, ttlMs),
+                this.record(key, value, ttlMs, meta),
             );
         } catch (error) {
             this.logger.warn(`cache: could not persist ${key} (${describe(error)})`);
@@ -109,22 +120,36 @@ export class DiskCache {
         return this.isFresh(record, options) ? record : undefined;
     }
 
-    write<V>(key: string, value: V, ttlMs = this.ttlMs): void {
+    write<V>(
+        key: string,
+        value: V,
+        ttlMs = this.ttlMs,
+        meta?: Record<string, unknown>,
+    ): void {
         try {
             ensureDir(this.dir);
-            writeJsonFileAtomic(this.pathFor(key), this.record(key, value, ttlMs));
+            writeJsonFileAtomic(
+                this.pathFor(key),
+                this.record(key, value, ttlMs, meta),
+            );
         } catch (error) {
             this.logger.warn(`cache: could not persist ${key} (${describe(error)})`);
         }
     }
 
-    private record<V>(key: string, value: V, ttlMs: number): DiskCacheRecord<V> {
+    private record<V>(
+        key: string,
+        value: V,
+        ttlMs: number,
+        meta?: Record<string, unknown>,
+    ): DiskCacheRecord<V> {
         const storedAt = this.now();
         return {
             key,
             storedAt,
             expiresAt: ttlMs > 0 && Number.isFinite(ttlMs) ? storedAt + ttlMs : null,
             value,
+            ...(meta ? { meta } : {}),
         };
     }
 

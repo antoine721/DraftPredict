@@ -277,7 +277,9 @@ export class DatasetService {
                 };
 
                 this.memory.set(key, entry, this.ttlMs);
-                await this.disk?.writeAsync(key, entry.dataset, this.ttlMs);
+                await this.disk?.writeAsync(key, entry.dataset, this.ttlMs, {
+                    provider: entry.provider,
+                });
 
                 this.emitter.emit("loaded", entry);
                 this.emitter.emit("updated", entry);
@@ -327,7 +329,10 @@ export class DatasetService {
                 }),
                 params: stripSignal(params),
                 key,
-                provider: "disk-cache",
+                // Keep the provider that originally produced these bytes, so a
+                // cache hit cannot launder an offline fixture into data that
+                // looks live. `source` still says the copy came from disk.
+                provider: originProvider(record) ?? "disk-cache",
                 source: "disk",
                 loadedAt: record.storedAt,
             };
@@ -357,7 +362,7 @@ export class DatasetService {
                 }),
                 params: stripSignal(params),
                 key,
-                provider: "disk-cache",
+                provider: originProvider(record) ?? "disk-cache",
                 source: "stale",
                 loadedAt: record.storedAt,
             };
@@ -376,4 +381,13 @@ function stripSignal(params: DatasetParams): DatasetParams {
 
 function describe(error: unknown): string {
     return error instanceof Error ? error.message : String(error);
+}
+
+/**
+ * The provider a cached dataset originally came from, when the cache entry
+ * recorded it. Entries written before this was tracked simply have no `meta`.
+ */
+function originProvider(record: { meta?: Record<string, unknown> }): string | undefined {
+    const provider = record.meta?.provider;
+    return typeof provider === "string" && provider.length > 0 ? provider : undefined;
 }

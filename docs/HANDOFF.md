@@ -4,7 +4,7 @@
 > branche `claude/connexion-verification-2xb05d`. Le conteneur de dev est
 > éphémère : le dépôt Git est la seule source de vérité.
 
-Dernière mise à jour : 2026-08-26.
+Dernière mise à jour : 2026-08-26 (projet stabilisé, prêt pour une pull request).
 
 ---
 
@@ -70,15 +70,11 @@ des données) : voir la section 4 ci-dessous et lire `apps/web/src/ui/index.ts`,
 
 ### 2.2 Corrections connues (petites, identifiées, non bloquantes)
 
-- **`apps/server/src/services/dataset.ts`** : `OFFLINE_PROVIDERS` ne contient
-  que `"bundled-fixture"`. Quand le dataset fixture a été écrit dans le cache
-  disque, `DatasetService` renvoie `provider: "disk-cache"` et `offline`
-  redevient `false` — le bandeau « données de démonstration hors-ligne »
-  disparaît alors qu'on sert toujours des données synthétiques.
-  *Correctif :* persister le provider d'origine dans l'enregistrement du cache
-  disque (`packages/data/src/dataset/disk-cache.ts`, ajouter un champ `meta`)
-  et le restaurer à la lecture dans `service.ts` (~ligne 330), en gardant
-  `source: "disk"`.
+- ~~Le cache disque « blanchissait » le dataset fixture en données
+  apparemment réelles (`provider: "disk-cache"`, `offline: false`)~~ —
+  **corrigé** : le cache mémorise désormais le provider d'origine
+  (`DiskCacheRecord.meta`) et `DatasetService` le restaure à la lecture, en
+  gardant `source: "disk"`. Vérifié à froid et à chaud.
 - **`eslint.config.js`** : ajouter `languageOptions.globals` pour `**/*.mjs`
   (les scripts Electron ont dû déclarer `/* global process */` à la main).
 - **`GET /api/lcu/champ-select`** : n'inclut pas `updatedAt` hors champ select.

@@ -1,9 +1,6 @@
 /** league-v4 — the ranked queues we care about. */
 export type LeagueQueueType =
-    | "RANKED_SOLO_5x5"
-    | "RANKED_FLEX_SR"
-    | "RANKED_FLEX_TT"
-    | "CHERRY";
+    "RANKED_SOLO_5x5" | "RANKED_FLEX_SR" | "RANKED_FLEX_TT" | "CHERRY";
 
 export type MiniSeriesDto = {
     losses: number;

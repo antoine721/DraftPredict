@@ -184,7 +184,9 @@ function buildChampionPool(
         .slice(0, limit);
 }
 
-function buildRoleDistribution(games: readonly AnalyzedGame[]): RoleDistributionEntry[] {
+function buildRoleDistribution(
+    games: readonly AnalyzedGame[],
+): RoleDistributionEntry[] {
     const entries: RoleDistributionEntry[] = [];
     for (const role of ROLES) {
         const list = games.filter((game) => game.summary.role === role);
@@ -228,9 +230,7 @@ function buildMatchups(
             score: (wins + 1) / (list.length + 2),
         });
     }
-    const sorted = [...entries].sort(
-        (a, b) => b.score - a.score || b.games - a.games,
-    );
+    const sorted = [...entries].sort((a, b) => b.score - a.score || b.games - a.games);
     return {
         best: sorted.slice(0, limit),
         worst: [...sorted].reverse().slice(0, limit),
@@ -341,16 +341,11 @@ function buildTotals(games: readonly AnalyzedGame[]): PlaystyleTotals {
             games.map((game) => game.summary.vision.scorePerMinute),
         ),
         goldPerMinute: mean(games.map((game) => game.summary.goldPerMinute)),
-        averageDurationMinutes: mean(
-            games.map((game) => game.summary.durationMinutes),
-        ),
+        averageDurationMinutes: mean(games.map((game) => game.summary.durationMinutes)),
     };
 }
 
-function groupBy<T>(
-    items: readonly T[],
-    key: (item: T) => string,
-): Map<string, T[]> {
+function groupBy<T>(items: readonly T[], key: (item: T) => string): Map<string, T[]> {
     const map = new Map<string, T[]>();
     for (const item of items) {
         const id = key(item);

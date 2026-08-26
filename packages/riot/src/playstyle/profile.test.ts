@@ -203,10 +203,7 @@ describe("profilePlaystyle — a jungler", () => {
 
 describe("profilePlaystyle — derived sections", () => {
     it("builds the champion pool with mastery and roles", () => {
-        const summaries = [
-            ...carryGames(6),
-            ...supportGames(2),
-        ];
+        const summaries = [...carryGames(6), ...supportGames(2)];
         const profile = profilePlaystyle(summaries, {
             mastery: [
                 {

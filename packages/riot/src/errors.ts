@@ -102,7 +102,8 @@ export class RiotAuthError extends RiotApiError {
     constructor(options: RiotApiErrorOptions = {}) {
         super("Riot API: invalid or expired API key", {
             ...options,
-            code: options.code ?? (options.status === 403 ? "FORBIDDEN" : "UNAUTHORIZED"),
+            code:
+                options.code ?? (options.status === 403 ? "FORBIDDEN" : "UNAUTHORIZED"),
             status: options.status ?? 401,
             retryable: false,
         });
@@ -112,7 +113,10 @@ export class RiotAuthError extends RiotApiError {
 
 /** 404 — the resource does not exist (unknown Riot ID, no live game, …). */
 export class RiotNotFoundError extends RiotApiError {
-    constructor(message = "Riot API: resource not found", options: RiotApiErrorOptions = {}) {
+    constructor(
+        message = "Riot API: resource not found",
+        options: RiotApiErrorOptions = {},
+    ) {
         super(message, {
             ...options,
             code: options.code ?? "NOT_FOUND",

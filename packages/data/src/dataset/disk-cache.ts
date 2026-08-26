@@ -78,7 +78,10 @@ export class DiskCache {
     async writeAsync<V>(key: string, value: V, ttlMs = this.ttlMs): Promise<void> {
         try {
             ensureDir(this.dir);
-            await writeJsonFileAtomicAsync(this.pathFor(key), this.record(key, value, ttlMs));
+            await writeJsonFileAtomicAsync(
+                this.pathFor(key),
+                this.record(key, value, ttlMs),
+            );
         } catch (error) {
             this.logger.warn(`cache: could not persist ${key} (${describe(error)})`);
         }

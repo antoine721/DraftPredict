@@ -109,11 +109,17 @@ export class RiotApiClient {
         });
     }
 
-    private platformUrl(path: string, query?: Record<string, string | number | undefined>): string {
+    private platformUrl(
+        path: string,
+        query?: Record<string, string | number | undefined>,
+    ): string {
         return buildUrl(platformBaseUrl(this.platform), path, query);
     }
 
-    private regionalUrl(path: string, query?: Record<string, string | number | undefined>): string {
+    private regionalUrl(
+        path: string,
+        query?: Record<string, string | number | undefined>,
+    ): string {
         return buildUrl(regionalBaseUrl(this.regional), path, query);
     }
 
@@ -130,10 +136,13 @@ export class RiotApiClient {
             const tag = tagLine.trim().replace(/^#/, "");
             if (!name || !tag) {
                 return Promise.reject(
-                    new RiotApiError("A Riot ID needs both a game name and a tag line", {
-                        code: "INVALID_RIOT_ID",
-                        endpoint: "account-v1.byRiotId",
-                    }),
+                    new RiotApiError(
+                        "A Riot ID needs both a game name and a tag line",
+                        {
+                            code: "INVALID_RIOT_ID",
+                            endpoint: "account-v1.byRiotId",
+                        },
+                    ),
                 );
             }
             return this.get<RiotAccountDto>(
@@ -254,9 +263,7 @@ export class RiotApiClient {
             for (const id of ids) {
                 const match = await this.http.requestOrNull<MatchDto>({
                     method: "match-v5.byId",
-                    url: this.regionalUrl(
-                        `/lol/match/v5/matches/${encodeSegment(id)}`,
-                    ),
+                    url: this.regionalUrl(`/lol/match/v5/matches/${encodeSegment(id)}`),
                 });
                 if (match) matches.push(match);
             }

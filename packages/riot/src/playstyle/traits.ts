@@ -1,4 +1,9 @@
-import { PLAYSTYLE_AXES, type AxisScores, type PlaystyleAxis, type PlaystyleTrait } from "./types.js";
+import {
+    PLAYSTYLE_AXES,
+    type AxisScores,
+    type PlaystyleAxis,
+    type PlaystyleTrait,
+} from "./types.js";
 
 /**
  * English labels for the strengths and weaknesses list.
@@ -41,7 +46,11 @@ export function weaknessLabel(axis: PlaystyleAxis): string {
     return WEAKNESS_LABELS[axis];
 }
 
-function trait(axis: PlaystyleAxis, score: number, kind: "strength" | "weakness"): PlaystyleTrait {
+function trait(
+    axis: PlaystyleAxis,
+    score: number,
+    kind: "strength" | "weakness",
+): PlaystyleTrait {
     return {
         axis,
         labelKey: `playstyle.${kind}.${axis}`,

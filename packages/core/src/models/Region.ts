@@ -48,9 +48,7 @@ export const REGIONS_IN_DISPLAY_ORDER: readonly Region[] = REGIONS;
 export const DEFAULT_REGION: Region = "ALL";
 
 export function isRegion(value: unknown): value is Region {
-    return (
-        typeof value === "string" && (REGIONS as readonly string[]).includes(value)
-    );
+    return typeof value === "string" && (REGIONS as readonly string[]).includes(value);
 }
 
 /** Parses a region from a case-insensitive string, `undefined` when unknown. */

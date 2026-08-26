@@ -1,4 +1,4 @@
-import type { Role } from "../Role";
+import type { Role } from "../Role.js";
 
 /**
  * Stats for a champion (in a role) playing alongside a team mate.

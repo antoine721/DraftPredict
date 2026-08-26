@@ -4,7 +4,7 @@
 > branche `claude/connexion-verification-2xb05d`. Le conteneur de dev est
 > éphémère : le dépôt Git est la seule source de vérité.
 
-Dernière mise à jour : 2026-08-26 (projet stabilisé, prêt pour une pull request).
+Dernière mise à jour : 2026-08-26 — **application complète**. Il ne reste que la mise en production (clé API, empaquetage) et les vérifications qui exigent une vraie machine de jeu.
 
 ---
 
@@ -56,6 +56,17 @@ Il ne reste rien de provisoire dans `apps/web/src/views/`.
   gardant `source: "disk"`. Vérifié à froid et à chaud.
 - ~~`eslint.config.js` sans globals Node pour les `**/*.mjs`~~ — **corrigé**,
   les déclarations `/* global … */` manuelles ont été retirées.
+- ~~`GET /api/lcu/champ-select` n'incluait pas `updatedAt` hors sélection~~ —
+  **corrigé**, la charge utile garde les mêmes clés dans les deux cas.
+- ~~Il fallait saisir son Riot ID même quand le client tournait~~ — **corrigé** :
+  `GET /api/account/me` résout le compte connecté au client, sans clé API.
+- ~~`tsc -b` sautait un projet quand son `dist/` avait été supprimé~~ —
+  **corrigé** : le marqueur incrémental vit désormais dans `dist/`, et
+  `npm run clean` supprime tout.
+- ~~La redirection depuis `/` perdait les paramètres d'un lien de draft
+  partagé~~ — **corrigé**.
+- ~~Le bandeau « données hors-ligne » mélangeait français et anglais~~ —
+  **corrigé**.
 - ~~`npm run dev` échouait sur un dépôt fraîchement cloné~~ — **corrigé** :
   `tsx` résolvait `@draftpredict/data` vers un `dist/` pas encore compilé. Les
   hooks `prepare` / `predev` / `predev:server` / `prepipeline` construisent

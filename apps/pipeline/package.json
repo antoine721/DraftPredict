@@ -1,0 +1,16 @@
+{
+  "name": "@draftpredict/pipeline",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "start": "tsx src/main.ts"
+  },
+  "dependencies": {
+    "@draftpredict/core": "*",
+    "@draftpredict/data": "*",
+    "@draftpredict/riot": "*"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "@draftpredict/desktop",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/main.cjs",
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "dev": "electron .",
+    "package": "electron-builder"
+  },
+  "dependencies": { "@draftpredict/server": "*" },
+  "devDependencies": { "electron": "^33.2.1", "electron-builder": "^25.1.8" }
+}

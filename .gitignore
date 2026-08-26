@@ -1,0 +1,15 @@
+node_modules/
+dist/
+build/
+out/
+coverage/
+*.tsbuildinfo
+.env
+.env.local
+.DS_Store
+.cache/
+.turbo/
+apps/desktop/release/
+apps/web/dist/
+data-cache/
+*.log

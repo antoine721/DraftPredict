@@ -1,0 +1,12 @@
+{
+  "name": "@draftpredict/lcu",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
+  "files": ["dist"],
+  "scripts": { "build": "tsc -b", "typecheck": "tsc --noEmit -p tsconfig.json" },
+  "dependencies": { "@draftpredict/core": "*", "@draftpredict/data": "*", "ws": "^8.18.0" },
+  "devDependencies": { "@types/ws": "^8.5.13" }
+}

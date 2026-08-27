@@ -14,7 +14,8 @@ import { NBSP, formatNumber, formatPercent } from "../../lib/format";
 
 export type PoolEntry = PlaystyleProfile["championPool"][number];
 export type RoleShare = PlaystyleProfile["roleDistribution"][number];
-export type AxisDetail = PlaystyleProfile["axisDetails"][keyof PlaystyleProfile["axisDetails"]];
+export type AxisDetail =
+    PlaystyleProfile["axisDetails"][keyof PlaystyleProfile["axisDetails"]];
 
 // ---------------------------------------------------------------- riot id ---
 
@@ -90,7 +91,10 @@ export function upsertAccount(
         // A Riot ID once known is not forgotten because the client reconnected.
         riotId: account.riotId ?? previous?.riotId ?? null,
     };
-    return [merged, ...list.filter((entry) => accountKey(entry) !== key)].slice(0, limit);
+    return [merged, ...list.filter((entry) => accountKey(entry) !== key)].slice(
+        0,
+        limit,
+    );
 }
 
 export function removeAccount(
@@ -108,14 +112,16 @@ export function sanitizeAccounts(value: unknown): SavedAccount[] {
         if (typeof entry !== "object" || entry === null) continue;
         const record = entry as Record<string, unknown>;
         if (typeof record.puuid !== "string" || record.puuid.length === 0) continue;
-        if (typeof record.platform !== "string" || record.platform.length === 0) continue;
+        if (typeof record.platform !== "string" || record.platform.length === 0)
+            continue;
         clean.push({
             puuid: record.puuid,
             riotId: typeof record.riotId === "string" ? record.riotId : null,
             platform: record.platform,
             source: record.source === "lcu" ? "lcu" : "riot-id",
             lastUsedAt:
-                typeof record.lastUsedAt === "number" && Number.isFinite(record.lastUsedAt)
+                typeof record.lastUsedAt === "number" &&
+                Number.isFinite(record.lastUsedAt)
                     ? record.lastUsedAt
                     : 0,
         });
@@ -142,9 +148,7 @@ export function rankStats(entry: LeagueEntryDto | undefined | null): RankStats {
 /** `"WLN"` -> `["V", "D", "—"]`: the promotion series, read left to right. */
 export function seriesMarks(progress: string | null | undefined): string[] {
     if (!progress) return [];
-    return [...progress].map((mark) =>
-        mark === "W" ? "V" : mark === "L" ? "D" : "—",
-    );
+    return [...progress].map((mark) => (mark === "W" ? "V" : mark === "L" ? "D" : "—"));
 }
 
 /** Apex tiers have a single division; showing "Maître I" is noise. */
@@ -182,8 +186,10 @@ export type AxisVerdict = {
  */
 export function axisVerdict(score: number): AxisVerdict {
     const delta = score - AXIS_BASELINE;
-    if (score >= 58) return { delta, label: "au-dessus de la moyenne du rôle", tone: "positive" };
-    if (score <= 42) return { delta, label: "en dessous de la moyenne du rôle", tone: "negative" };
+    if (score >= 58)
+        return { delta, label: "au-dessus de la moyenne du rôle", tone: "positive" };
+    if (score <= 42)
+        return { delta, label: "en dessous de la moyenne du rôle", tone: "negative" };
     return { delta, label: "dans la moyenne du rôle", tone: "neutral" };
 }
 
@@ -287,14 +293,20 @@ export function sortPool(
         case "kda":
             return rows.sort((a, b) => b.kda - a.kda || b.games - a.games);
         case "performance":
-            return rows.sort((a, b) => b.performance - a.performance || b.games - a.games);
+            return rows.sort(
+                (a, b) => b.performance - a.performance || b.games - a.games,
+            );
         case "mastery":
             return rows.sort(
-                (a, b) => (b.masteryPoints ?? 0) - (a.masteryPoints ?? 0) || b.games - a.games,
+                (a, b) =>
+                    (b.masteryPoints ?? 0) - (a.masteryPoints ?? 0) ||
+                    b.games - a.games,
             );
         default:
             void csPerMinute;
-            return rows.sort((a, b) => b.games - a.games || smoothedWinrate(b) - smoothedWinrate(a));
+            return rows.sort(
+                (a, b) => b.games - a.games || smoothedWinrate(b) - smoothedWinrate(a),
+            );
     }
 }
 
@@ -317,7 +329,11 @@ export function csPerMinuteByChampion(
     const totals = new Map<string, { cs: number; minutes: number; games: number }>();
     for (const match of matches) {
         if (match.remake || match.durationMinutes <= 0) continue;
-        const current = totals.get(match.championKey) ?? { cs: 0, minutes: 0, games: 0 };
+        const current = totals.get(match.championKey) ?? {
+            cs: 0,
+            minutes: 0,
+            games: 0,
+        };
         current.cs += match.cs;
         current.minutes += match.durationMinutes;
         current.games += 1;
@@ -351,7 +367,9 @@ export function matchOutcome(match: MatchSummary): MatchOutcome {
 }
 
 /** `8 / 3 / 6` — the universal KDA line, always in that order. */
-export function killLine(match: Pick<MatchSummary, "kills" | "deaths" | "assists">): string {
+export function killLine(
+    match: Pick<MatchSummary, "kills" | "deaths" | "assists">,
+): string {
     return `${match.kills}${NBSP}/${NBSP}${match.deaths}${NBSP}/${NBSP}${match.assists}`;
 }
 
@@ -421,15 +439,32 @@ export function predictionVerdict(
     winrate: number | null | undefined,
     match: Pick<MatchSummary, "win" | "remake">,
 ): PredictionVerdict | null {
-    if (winrate === null || winrate === undefined || !Number.isFinite(winrate)) return null;
-    const outcome = match.remake ? "partie annulée" : match.win ? "victoire" : "défaite";
+    if (winrate === null || winrate === undefined || !Number.isFinite(winrate))
+        return null;
+    const outcome = match.remake
+        ? "partie annulée"
+        : match.win
+          ? "victoire"
+          : "défaite";
     const sentence = `prédit ${formatPercent(winrate, 0)}, résultat${NBSP}: ${outcome}`;
     const surprise = Math.abs((match.win ? 1 : 0) - winrate);
     if (match.remake) {
-        return { sentence, correct: null, surprise: 0, label: "Sans objet", tone: "neutral" };
+        return {
+            sentence,
+            correct: null,
+            surprise: 0,
+            label: "Sans objet",
+            tone: "neutral",
+        };
     }
     if (Math.abs(winrate - 0.5) < 0.01) {
-        return { sentence, correct: null, surprise, label: "Draft équilibré", tone: "neutral" };
+        return {
+            sentence,
+            correct: null,
+            surprise,
+            label: "Draft équilibré",
+            tone: "neutral",
+        };
     }
     const correct = winrate > 0.5 === match.win;
     return {

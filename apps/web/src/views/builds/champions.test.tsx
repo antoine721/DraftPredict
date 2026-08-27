@@ -440,10 +440,13 @@ describe("champion index", () => {
         expect(html).toContain(formatPercent(950 / 1806));
     });
 
-    it("labels the offline fixture instead of passing it off as live data", () => {
-        expect(render(ROUTES.champions.path)).toContain(
-            "Données de démonstration hors-ligne",
-        );
+    it("does not present the offline fixture as live statistics", () => {
+        // The label itself is the shell's job now — one badge, on every view
+        // (see app/shell.test.tsx, "labels an offline dataset"). What this view
+        // owes is never to assert the opposite.
+        const html = render(ROUTES.champions.path);
+        expect(html).not.toContain("statistiques réelles");
+        expect(html).not.toContain("données live");
     });
 
     it("never invents a ban rate the dataset does not carry", () => {

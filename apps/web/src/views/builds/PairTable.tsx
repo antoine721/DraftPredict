@@ -40,7 +40,7 @@ export function PairTable({
         <ul className="flex flex-col gap-1">
             <li
                 aria-hidden
-                className="flex items-center gap-3 px-2 pb-1 text-[10px] tracking-wider text-ink-subtle uppercase"
+                className="flex items-center gap-3 px-2 pb-1 text-xs text-ink-subtle"
             >
                 <span className="w-8 shrink-0" />
                 <span className="min-w-0 flex-1">Champion</span>

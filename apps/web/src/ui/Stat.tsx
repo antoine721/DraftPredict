@@ -44,7 +44,7 @@ export function Stat({
                 className,
             )}
         >
-            <span className="flex items-center gap-1.5 text-[11px] font-medium tracking-wider text-ink-subtle uppercase">
+            <span className="flex items-center gap-1.5 text-xs font-medium text-ink-subtle">
                 {icon}
                 {label}
             </span>

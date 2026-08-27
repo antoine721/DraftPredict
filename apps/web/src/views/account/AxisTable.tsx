@@ -184,7 +184,7 @@ function AxisBody({ detail }: { detail: AxisDetail }) {
                         Métriques qui composent l'axe {axisLabel(detail.axis)}
                     </caption>
                     <thead>
-                        <tr className="text-left text-[11px] tracking-wider text-ink-subtle uppercase">
+                        <tr className="text-left text-xs text-ink-subtle">
                             <th scope="col" className="pb-1 font-medium">
                                 Métrique
                             </th>
@@ -229,7 +229,11 @@ function AxisBody({ detail }: { detail: AxisDetail }) {
                                     >
                                         {formatNumber(input.score, 0)}
                                         <span className="font-normal text-ink-subtle">
-                                            {NBSP}({formatAxisDelta(input.score - AXIS_BASELINE)})
+                                            {NBSP}(
+                                            {formatAxisDelta(
+                                                input.score - AXIS_BASELINE,
+                                            )}
+                                            )
                                         </span>
                                     </td>
                                     <td className="tabular py-1.5 text-right text-ink-subtle">
@@ -243,8 +247,8 @@ function AxisBody({ detail }: { detail: AxisDetail }) {
             )}
 
             <p className="mt-2 text-[11px] text-ink-subtle">
-                Chaque métrique est comparée à un joueur médian du même rôle
-                (50&nbsp;= médiane, 100&nbsp;= très bonne partie), puis pondérée.
+                Chaque métrique est comparée à un joueur médian du même rôle (50&nbsp;=
+                médiane, 100&nbsp;= très bonne partie), puis pondérée.
             </p>
         </div>
     );

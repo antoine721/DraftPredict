@@ -53,8 +53,7 @@ export const AXIS_DESCRIPTIONS: Record<PlaystyleAxisKey, string> = {
     aggression:
         "Participation aux éliminations, part des dégâts infligés aux champions et kills en solo.",
     farming: "Sbires par minute, or par minute et part de l'or de l'équipe.",
-    vision:
-        "Score de vision par minute, balises posées et détruites, balises de contrôle achetées.",
+    vision: "Score de vision par minute, balises posées et détruites, balises de contrôle achetées.",
     objectives:
         "Participation aux dragons, hérauts, barons et dégâts aux objectifs et aux tourelles.",
     survivability: "Morts par minute, part des morts de l'équipe et KDA.",
@@ -103,25 +102,39 @@ const WEAKNESS_LABELS: Record<PlaystyleAxisKey, string> = {
 };
 
 const STRENGTH_ADVICE: Record<PlaystyleAxisKey, string> = {
-    aggression: "Vos picks peuvent assumer la pression : jouez les compositions qui cherchent le combat.",
-    farming: "Votre avance en or est votre levier : demandez les side lanes et les vagues.",
+    aggression:
+        "Vos picks peuvent assumer la pression : jouez les compositions qui cherchent le combat.",
+    farming:
+        "Votre avance en or est votre levier : demandez les side lanes et les vagues.",
     vision: "Votre vision ouvre les objectifs : appelez les rotations avant qu'ils n'apparaissent.",
-    objectives: "Vous convertissez déjà les objectifs : imposez le tempo autour de leur timer.",
-    survivability: "Vous restez en vie : prenez les positions avancées que personne d'autre ne peut tenir.",
-    teamplay: "Votre présence fait gagner les combats groupés : jouez proche de vos carries.",
-    consistency: "Vous rendez la même partie à chaque fois : c'est ce qui fait monter le classement.",
-    scaling: "Vous prenez l'avantage avec le temps : sécurisez le début de partie sans forcer.",
+    objectives:
+        "Vous convertissez déjà les objectifs : imposez le tempo autour de leur timer.",
+    survivability:
+        "Vous restez en vie : prenez les positions avancées que personne d'autre ne peut tenir.",
+    teamplay:
+        "Votre présence fait gagner les combats groupés : jouez proche de vos carries.",
+    consistency:
+        "Vous rendez la même partie à chaque fois : c'est ce qui fait monter le classement.",
+    scaling:
+        "Vous prenez l'avantage avec le temps : sécurisez le début de partie sans forcer.",
 };
 
 const WEAKNESS_ADVICE: Record<PlaystyleAxisKey, string> = {
-    aggression: "Cherchez une trade par vague plutôt qu'un combat par partie : votre part de dégâts est basse.",
-    farming: "Vous perdez des vagues : repassez farmer entre deux rotations, même en avance.",
+    aggression:
+        "Cherchez une trade par vague plutôt qu'un combat par partie : votre part de dégâts est basse.",
+    farming:
+        "Vous perdez des vagues : repassez farmer entre deux rotations, même en avance.",
     vision: "Posez une balise de contrôle par retour à la base : c'est le gain de score le plus simple.",
-    objectives: "Soyez présent 30 secondes avant l'apparition du dragon ou du héraut, pas après.",
-    survivability: "Vos morts coûtent plus que vos kills ne rapportent : reculez avant d'être à portée.",
-    teamplay: "Vos combats se jouent sans vous : rapprochez-vous de votre équipe après la phase de lane.",
-    consistency: "Vos écarts entre parties sont larges : réduisez votre pool de champions un moment.",
-    scaling: "Vos longues parties se dégradent : jouez pour fermer avant la trentième minute.",
+    objectives:
+        "Soyez présent 30 secondes avant l'apparition du dragon ou du héraut, pas après.",
+    survivability:
+        "Vos morts coûtent plus que vos kills ne rapportent : reculez avant d'être à portée.",
+    teamplay:
+        "Vos combats se jouent sans vous : rapprochez-vous de votre équipe après la phase de lane.",
+    consistency:
+        "Vos écarts entre parties sont larges : réduisez votre pool de champions un moment.",
+    scaling:
+        "Vos longues parties se dégradent : jouez pour fermer avant la trentième minute.",
 };
 
 /** `playstyle.strength.vision` / `playstyle.weakness.vision` -> French. */
@@ -137,8 +150,7 @@ export function traitLabel(labelKey: string, axis: string): string {
 /** One actionable sentence per trait — a list of adjectives helps nobody. */
 export function traitAdvice(labelKey: string, axis: string): string {
     const key = axis as PlaystyleAxisKey;
-    if (labelKey.startsWith("playstyle.weakness."))
-        return WEAKNESS_ADVICE[key] ?? "";
+    if (labelKey.startsWith("playstyle.weakness.")) return WEAKNESS_ADVICE[key] ?? "";
     return STRENGTH_ADVICE[key] ?? "";
 }
 
@@ -306,7 +318,9 @@ export const PLATFORMS: readonly PlatformOption[] = [
 export function platformLabel(platform: string | null | undefined): string {
     if (!platform) return "Région inconnue";
     const found = PLATFORMS.find(
-        (entry) => entry.id === platform.toLowerCase() || entry.code === platform.toUpperCase(),
+        (entry) =>
+            entry.id === platform.toLowerCase() ||
+            entry.code === platform.toUpperCase(),
     );
     return found ? `${found.code} — ${found.name}` : platform.toUpperCase();
 }
@@ -314,7 +328,9 @@ export function platformLabel(platform: string | null | undefined): string {
 export function platformCode(platform: string | null | undefined): string {
     if (!platform) return "—";
     const found = PLATFORMS.find(
-        (entry) => entry.id === platform.toLowerCase() || entry.code === platform.toUpperCase(),
+        (entry) =>
+            entry.id === platform.toLowerCase() ||
+            entry.code === platform.toUpperCase(),
     );
     return found ? found.code : platform.toUpperCase();
 }

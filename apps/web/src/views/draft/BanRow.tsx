@@ -20,9 +20,7 @@ export function BanRow({ team, bans, byKey, onAdd, onRemove }: BanRowProps) {
     const side = team === "ally" ? "votre équipe" : "l'équipe adverse";
     return (
         <div className="flex flex-col gap-1.5">
-            <span className="text-[10px] font-semibold tracking-wider text-ink-subtle uppercase">
-                Bans
-            </span>
+            <span className="text-xs font-semibold text-ink-subtle">Bans</span>
             <ul
                 className={cn(
                     "flex gap-1.5",

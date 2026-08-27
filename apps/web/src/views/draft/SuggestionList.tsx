@@ -109,7 +109,7 @@ function RoleSuggestions({
         <section className="flex min-w-0 flex-col gap-2">
             <h3
                 className={cn(
-                    "flex items-center gap-2 text-xs font-semibold tracking-wider uppercase",
+                    "flex items-center gap-2 text-xs font-semibold",
                     yours ? "text-gold" : "text-ink-muted",
                 )}
             >

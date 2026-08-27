@@ -148,7 +148,7 @@ export function DataPanel({ config: response }: { config: ConfigResponse }) {
                 <DatasetFacts meta={meta} />
 
                 <div>
-                    <p className="mb-2 text-xs font-medium tracking-wide text-ink-muted uppercase">
+                    <p className="mb-2 text-xs font-medium text-ink-muted">
                         Chaîne de fournisseurs
                     </p>
                     <ol className="flex flex-col gap-2">
@@ -177,9 +177,7 @@ export function DataPanel({ config: response }: { config: ConfigResponse }) {
                                                 {provider.label}
                                             </span>
                                             {active && (
-                                                <Badge tone="gold">
-                                                    A répondu
-                                                </Badge>
+                                                <Badge tone="gold">A répondu</Badge>
                                             )}
                                         </span>
                                         <span className="mt-0.5 block text-xs leading-relaxed text-ink-muted">

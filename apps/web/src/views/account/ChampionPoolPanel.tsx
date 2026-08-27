@@ -53,8 +53,14 @@ export function ChampionPoolPanel({
     className?: string;
 }) {
     const [sort, setSort] = useState<PoolSort>("games");
-    const rows = useMemo(() => sortPool(profile.championPool, sort), [profile.championPool, sort]);
-    const extremes = useMemo(() => poolExtremes(profile.championPool), [profile.championPool]);
+    const rows = useMemo(
+        () => sortPool(profile.championPool, sort),
+        [profile.championPool, sort],
+    );
+    const extremes = useMemo(
+        () => poolExtremes(profile.championPool),
+        [profile.championPool],
+    );
 
     return (
         <div className={cn("grid gap-4 xl:grid-cols-[minmax(0,1fr)_22rem]", className)}>
@@ -165,7 +171,7 @@ function PoolTable({
                     maîtrise
                 </caption>
                 <thead>
-                    <tr className="border-b border-line text-left text-[11px] tracking-wider text-ink-subtle uppercase">
+                    <tr className="border-b border-line text-left text-xs text-ink-subtle">
                         <th scope="col" className="px-3 py-2 font-medium">
                             Champion
                         </th>
@@ -199,7 +205,10 @@ function PoolTable({
                                 key={entry.championKey}
                                 className="border-b border-line-soft last:border-0 hover:bg-surface-hover"
                             >
-                                <th scope="row" className="px-3 py-2 text-left font-normal">
+                                <th
+                                    scope="row"
+                                    className="px-3 py-2 text-left font-normal"
+                                >
                                     <Link
                                         to={championPath(entry.championKey, role)}
                                         className="flex items-center gap-2.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
@@ -308,7 +317,7 @@ function ExtremeList({
         <section>
             <h4
                 className={cn(
-                    "mb-2 flex items-center gap-1.5 text-[11px] font-medium tracking-wider uppercase",
+                    "mb-2 flex items-center gap-1.5 text-xs font-medium",
                     tone === "positive" ? "text-positive" : "text-negative",
                 )}
             >

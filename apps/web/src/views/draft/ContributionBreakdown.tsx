@@ -96,9 +96,7 @@ function Section({
         <section className="flex flex-col gap-2">
             <header className="flex items-center justify-between gap-3">
                 <Tooltip content={hint} wide side="right">
-                    <h3 className="text-xs font-semibold tracking-wider text-ink-muted uppercase">
-                        {title}
-                    </h3>
+                    <h3 className="text-xs font-semibold text-ink-muted">{title}</h3>
                 </Tooltip>
                 <Badge tone={net >= 0 ? "positive" : "negative"}>
                     <span className="tabular">{formatSigned(net, 1)} pts</span>

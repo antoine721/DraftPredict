@@ -318,12 +318,12 @@ export function RuneTree({
                         />
 
                         <div className="flex flex-col gap-2">
-                            <h3 className="text-[11px] font-medium tracking-wider text-ink-subtle uppercase">
+                            <h3 className="text-xs font-medium text-ink-subtle">
                                 Fragments de statistiques
                             </h3>
                             {SHARD_ROWS.map((row, index) => (
                                 <div key={row.key} className="flex flex-col gap-1">
-                                    <span className="text-[10px] tracking-wider text-ink-subtle uppercase">
+                                    <span className="text-xs text-ink-subtle">
                                         {row.label}
                                     </span>
                                     {shardRows[index].length === 0 ? (
@@ -419,9 +419,7 @@ function Branch({
                     <RuneIcon src={pathIcon} name={pathName} size="sm" keystone />
                 )}
                 <div className="min-w-0">
-                    <h3 className="text-xs font-semibold tracking-wide text-ink-strong uppercase">
-                        {title}
-                    </h3>
+                    <h3 className="text-xs font-semibold text-ink-strong">{title}</h3>
                     <p className="truncate text-[11px] text-ink-muted">
                         {pathName ?? "Voie inconnue"}
                     </p>
@@ -435,7 +433,7 @@ function Branch({
             ) : (
                 rows.map((row) => (
                     <div key={row.slot} className="flex flex-col gap-1">
-                        <span className="text-[10px] tracking-wider text-ink-subtle uppercase">
+                        <span className="text-xs text-ink-subtle">
                             {rowLabel(row.slot)}
                         </span>
                         <div
@@ -552,7 +550,7 @@ function RuneOption({
                 </span>
                 <SampleSize games={entry.games} wins={entry.wins} showDot={false} />
                 {recommended && (
-                    <span className="rounded-full bg-gold/15 px-1.5 text-[9px] font-semibold tracking-wide text-gold uppercase">
+                    <span className="rounded-full bg-gold/15 px-1.5 text-[9px] font-semibold text-gold">
                         Recommandé
                     </span>
                 )}

@@ -167,7 +167,7 @@ export function ChampSelectMirror({
 
                 {bench.length > 0 && (
                     <div className="flex items-center gap-2">
-                        <span className="text-[11px] font-medium tracking-wider text-ink-subtle uppercase">
+                        <span className="text-xs font-medium text-ink-subtle">
                             Banc
                         </span>
                         <ul className="flex flex-wrap items-center gap-1">

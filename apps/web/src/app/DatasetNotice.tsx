@@ -61,8 +61,8 @@ export function DatasetNotice({
                 <span className="font-semibold">
                     Données de démonstration hors-ligne.
                 </span>{" "}
-                Les statistiques affichées proviennent d'un jeu de données
-                synthétique généré localement
+                Les statistiques affichées proviennent d'un jeu de données synthétique
+                généré localement
                 {dataset ? ` (${formatDatasetDate(dataset.date)})` : ""} : elles sont
                 cohérentes mais ne reflètent pas les vraies statistiques de la saison.
             </p>

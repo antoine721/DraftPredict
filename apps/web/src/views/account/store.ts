@@ -32,12 +32,16 @@ export type SavedAccountsState = {
 
 export type SavedAccountsActions = {
     /** Adds or refreshes an account and moves it to the front of the list. */
-    remember: (account: Omit<SavedAccount, "lastUsedAt"> & { lastUsedAt?: number }) => void;
+    remember: (
+        account: Omit<SavedAccount, "lastUsedAt"> & { lastUsedAt?: number },
+    ) => void;
     forget: (key: string) => void;
     clear: () => void;
 };
 
-export const useSavedAccountsStore = create<SavedAccountsState & SavedAccountsActions>()(
+export const useSavedAccountsStore = create<
+    SavedAccountsState & SavedAccountsActions
+>()(
     persist(
         (set) => ({
             accounts: [],

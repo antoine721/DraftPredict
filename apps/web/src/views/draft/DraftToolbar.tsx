@@ -146,11 +146,11 @@ export function DraftToolbar({
                 </Button>
             </div>
 
-            <div className="flex flex-1 flex-wrap items-center justify-end gap-2">
+            <div className="flex flex-wrap items-center gap-2">
                 <Select<string>
                     size="sm"
                     aria-label="Rang analysé"
-                    containerClassName="w-36"
+                    containerClassName="w-28"
                     value={rank ?? AUTO}
                     onValueChange={(value) =>
                         onRankChange(value === AUTO ? null : (value as Rank))
@@ -158,7 +158,9 @@ export function DraftToolbar({
                     options={[
                         {
                             value: AUTO,
-                            label: `Rang : auto${resolvedRank ? ` (${formatRank(resolvedRank)})` : ""}`,
+                            label: resolvedRank
+                                ? formatRank(resolvedRank)
+                                : "Rang auto",
                         },
                         ...RANKS.map((value) => ({
                             value,
@@ -169,7 +171,7 @@ export function DraftToolbar({
                 <Select<string>
                     size="sm"
                     aria-label="Région analysée"
-                    containerClassName="w-36"
+                    containerClassName="w-32"
                     value={region ?? AUTO}
                     onValueChange={(value) =>
                         onRegionChange(value === AUTO ? null : (value as Region))
@@ -177,7 +179,9 @@ export function DraftToolbar({
                     options={[
                         {
                             value: AUTO,
-                            label: `Région : auto${resolvedRegion ? ` (${REGION_LABELS[resolvedRegion] ?? resolvedRegion})` : ""}`,
+                            label: resolvedRegion
+                                ? (REGION_LABELS[resolvedRegion] ?? resolvedRegion)
+                                : "Région auto",
                         },
                         ...REGIONS.map((value) => ({
                             value,
@@ -193,7 +197,7 @@ export function DraftToolbar({
                     <Select<string>
                         size="sm"
                         aria-label="Niveau de risque"
-                        containerClassName="w-40"
+                        containerClassName="w-36"
                         value={riskLevel ?? AUTO}
                         onValueChange={(value) =>
                             onRiskLevelChange(
@@ -203,15 +207,13 @@ export function DraftToolbar({
                         options={[
                             {
                                 value: AUTO,
-                                label: `Risque : auto${
-                                    resolved
-                                        ? ` (${RISK_LABELS[resolved.riskLevel]})`
-                                        : ""
-                                }`,
+                                label: resolved
+                                    ? `Risque ${RISK_LABELS[resolved.riskLevel].toLowerCase()}`
+                                    : "Risque auto",
                             },
                             ...RISK_LEVELS.map((value) => ({
                                 value,
-                                label: `Risque : ${RISK_LABELS[value]}`,
+                                label: `Risque ${RISK_LABELS[value].toLowerCase()}`,
                             })),
                         ]}
                     />

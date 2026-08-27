@@ -38,15 +38,15 @@ export function MatchDetail({ match }: { match: MatchSummary }) {
     return (
         <div className="flex flex-col gap-4 border-t border-line bg-surface-1/60 px-3 py-3">
             <section className="flex flex-col gap-2">
-                <h4 className="flex items-center gap-1.5 text-[11px] font-medium tracking-wider text-ink-subtle uppercase">
+                <h4 className="flex items-center gap-1.5 text-xs font-medium text-ink-subtle">
                     <Sparkles aria-hidden className="h-3.5 w-3.5" />
                     Ce que le moteur aurait prédit
                 </h4>
 
                 {!analysable ? (
                     <p className="text-xs text-ink-subtle">
-                        Riot n'a pas renvoyé de draft complet pour cette partie : elle ne
-                        peut pas être rejouée dans le moteur.
+                        Riot n'a pas renvoyé de draft complet pour cette partie : elle
+                        ne peut pas être rejouée dans le moteur.
                     </p>
                 ) : isLoading ? (
                     <Skeleton className="h-14 w-full" />
@@ -63,15 +63,16 @@ export function MatchDetail({ match }: { match: MatchSummary }) {
                                     "border-positive/40 bg-positive/8",
                                 verdict.tone === "negative" &&
                                     "border-negative/40 bg-negative/8",
-                                verdict.tone === "neutral" && "border-line bg-surface-2/60",
+                                verdict.tone === "neutral" &&
+                                    "border-line bg-surface-2/60",
                             )}
                         >
                             <span className="tabular text-2xl font-semibold text-ink-strong">
                                 {formatPercent(analysis.result.winrate, 0)}
                             </span>
                             <span className="min-w-0 flex-1 text-xs text-ink-muted">
-                                de chances de victoire pour votre équipe avant le premier
-                                pick — {verdict.sentence}.
+                                de chances de victoire pour votre équipe avant le
+                                premier pick — {verdict.sentence}.
                             </span>
                             <Badge
                                 tone={
@@ -91,7 +92,7 @@ export function MatchDetail({ match }: { match: MatchSummary }) {
             </section>
 
             <section className="flex flex-col gap-2">
-                <h4 className="text-[11px] font-medium tracking-wider text-ink-subtle uppercase">
+                <h4 className="text-xs font-medium text-ink-subtle">
                     Draft de la partie
                 </h4>
                 <DraftGrid match={match} byKey={index.byKey} />
@@ -105,11 +106,13 @@ export function MatchDetail({ match }: { match: MatchSummary }) {
 function orderedPlayers(players: readonly Player[]): (Player | null)[] {
     const byRole = new Map<Role, Player>();
     for (const player of players) {
-        if (player.role !== null && !byRole.has(player.role)) byRole.set(player.role, player);
+        if (player.role !== null && !byRole.has(player.role))
+            byRole.set(player.role, player);
     }
     // Riot omits positions on some queues; falling back to the raw order keeps
     // all five players on screen instead of silently dropping them.
-    if (byRole.size === ROLES.length) return ROLES.map((role) => byRole.get(role) ?? null);
+    if (byRole.size === ROLES.length)
+        return ROLES.map((role) => byRole.get(role) ?? null);
     return ROLES.map((_, index) => players[index] ?? null);
 }
 
@@ -125,7 +128,7 @@ function DraftGrid({
 
     return (
         <div className="flex flex-col gap-1">
-            <div className="grid grid-cols-[minmax(0,1fr)_2.5rem_minmax(0,1fr)] gap-2 text-[11px] tracking-wider text-ink-subtle uppercase">
+            <div className="grid grid-cols-[minmax(0,1fr)_2.5rem_minmax(0,1fr)] gap-2 text-xs text-ink-subtle">
                 <span className={match.team.win ? "text-positive" : "text-ink-subtle"}>
                     Votre équipe {match.team.win ? "(victoire)" : "(défaite)"}
                 </span>
@@ -213,7 +216,9 @@ function PlayerCell({
             )}
         >
             <ChampionAvatar
-                champion={champion ?? { key: player.championKey, name: player.championName }}
+                champion={
+                    champion ?? { key: player.championKey, name: player.championName }
+                }
                 size="xs"
                 ring={side === "ally" ? "ally" : "enemy"}
             />
@@ -261,7 +266,7 @@ function BanRows({
 
     return (
         <section className="flex flex-wrap items-center gap-x-6 gap-y-2">
-            <h4 className="flex items-center gap-1.5 text-[11px] font-medium tracking-wider text-ink-subtle uppercase">
+            <h4 className="flex items-center gap-1.5 text-xs font-medium text-ink-subtle">
                 <Ban aria-hidden className="h-3.5 w-3.5" />
                 Bans
             </h4>

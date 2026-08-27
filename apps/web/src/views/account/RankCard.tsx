@@ -17,15 +17,47 @@ import { isApexTier, rankStats, seriesMarks } from "./helpers";
 
 const TIER_STYLES: Record<string, { ring: string; text: string; fill: string }> = {
     IRON: { ring: "border-[#6b625a]", text: "text-[#a89e94]", fill: "bg-[#6b625a]/15" },
-    BRONZE: { ring: "border-[#8c5b3a]", text: "text-[#c08457]", fill: "bg-[#8c5b3a]/15" },
-    SILVER: { ring: "border-[#8a97a3]", text: "text-[#b8c4cf]", fill: "bg-[#8a97a3]/15" },
+    BRONZE: {
+        ring: "border-[#8c5b3a]",
+        text: "text-[#c08457]",
+        fill: "bg-[#8c5b3a]/15",
+    },
+    SILVER: {
+        ring: "border-[#8a97a3]",
+        text: "text-[#b8c4cf]",
+        fill: "bg-[#8a97a3]/15",
+    },
     GOLD: { ring: "border-[#c8a44a]", text: "text-[#e2c169]", fill: "bg-[#c8a44a]/15" },
-    PLATINUM: { ring: "border-[#4e9b93]", text: "text-[#6fc7bd]", fill: "bg-[#4e9b93]/15" },
-    EMERALD: { ring: "border-[#3f9152]", text: "text-[#5fbd76]", fill: "bg-[#3f9152]/15" },
-    DIAMOND: { ring: "border-[#5b7bd5]", text: "text-[#8aa6f0]", fill: "bg-[#5b7bd5]/15" },
-    MASTER: { ring: "border-[#9b5bd5]", text: "text-[#c18ef0]", fill: "bg-[#9b5bd5]/15" },
-    GRANDMASTER: { ring: "border-[#c4453f]", text: "text-[#e8756f]", fill: "bg-[#c4453f]/15" },
-    CHALLENGER: { ring: "border-[#3fb6d8]", text: "text-[#79dcf5]", fill: "bg-[#3fb6d8]/15" },
+    PLATINUM: {
+        ring: "border-[#4e9b93]",
+        text: "text-[#6fc7bd]",
+        fill: "bg-[#4e9b93]/15",
+    },
+    EMERALD: {
+        ring: "border-[#3f9152]",
+        text: "text-[#5fbd76]",
+        fill: "bg-[#3f9152]/15",
+    },
+    DIAMOND: {
+        ring: "border-[#5b7bd5]",
+        text: "text-[#8aa6f0]",
+        fill: "bg-[#5b7bd5]/15",
+    },
+    MASTER: {
+        ring: "border-[#9b5bd5]",
+        text: "text-[#c18ef0]",
+        fill: "bg-[#9b5bd5]/15",
+    },
+    GRANDMASTER: {
+        ring: "border-[#c4453f]",
+        text: "text-[#e8756f]",
+        fill: "bg-[#c4453f]/15",
+    },
+    CHALLENGER: {
+        ring: "border-[#3fb6d8]",
+        text: "text-[#79dcf5]",
+        fill: "bg-[#3fb6d8]/15",
+    },
 };
 
 const UNRANKED = {
@@ -57,9 +89,7 @@ export function RankCard({
             )}
         >
             <div className="flex items-center justify-between gap-2">
-                <span className="text-[11px] font-medium tracking-wider text-ink-subtle uppercase">
-                    {label}
-                </span>
+                <span className="text-xs font-medium text-ink-subtle">{label}</span>
                 {entry?.hotStreak && (
                     <Badge tone="warning" icon={<Flame className="h-3 w-3" />}>
                         Série en cours
@@ -99,9 +129,13 @@ export function RankCard({
             {entry ? (
                 <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 text-xs">
                     <span className="tabular text-ink-muted">
-                        <span className="text-positive">{formatNumber(stats.wins)}V</span>
+                        <span className="text-positive">
+                            {formatNumber(stats.wins)}V
+                        </span>
                         {NBSP}/{NBSP}
-                        <span className="text-negative">{formatNumber(stats.losses)}D</span>
+                        <span className="text-negative">
+                            {formatNumber(stats.losses)}D
+                        </span>
                     </span>
                     <Tooltip
                         wide
@@ -131,7 +165,10 @@ export function RankCard({
             {marks.length > 0 && (
                 <div className="flex items-center gap-2">
                     <span className="text-[11px] text-ink-subtle">Série&nbsp;:</span>
-                    <span className="flex items-center gap-1" aria-label="Série de promotion">
+                    <span
+                        className="flex items-center gap-1"
+                        aria-label="Série de promotion"
+                    >
                         {marks.map((mark, index) => (
                             <span
                                 key={index}

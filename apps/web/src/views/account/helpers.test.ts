@@ -160,8 +160,14 @@ describe("saved accounts", () => {
 
 describe("ranks", () => {
     it("counts games from wins and losses, never from a total field", () => {
-        expect(rankStats({ queueType: "RANKED_SOLO_5x5", leaguePoints: 4, wins: 3, losses: 1 }))
-            .toEqual({ games: 4, wins: 3, losses: 1, winrate: 0.75 });
+        expect(
+            rankStats({
+                queueType: "RANKED_SOLO_5x5",
+                leaguePoints: 4,
+                wins: 3,
+                losses: 1,
+            }),
+        ).toEqual({ games: 4, wins: 3, losses: 1, winrate: 0.75 });
     });
 
     it("reports an unranked queue as zero rather than NaN", () => {
@@ -293,7 +299,10 @@ describe("champion pool", () => {
         expect(sortPool(rows, "games")[0]!.championKey).toBe("b");
         expect(
             sortPool(
-                [entry("a", 4, 2, { masteryPoints: 10 }), entry("b", 4, 2, { masteryPoints: 99 })],
+                [
+                    entry("a", 4, 2, { masteryPoints: 10 }),
+                    entry("b", 4, 2, { masteryPoints: 99 }),
+                ],
                 "mastery",
             )[0]!.championKey,
         ).toBe("b");
@@ -301,7 +310,14 @@ describe("champion pool", () => {
 
     it("takes the most played role as the main one", () => {
         expect(
-            mainPoolRole(entry("a", 9, 4, { roles: [{ role: 2, games: 3 }, { role: 4, games: 6 }] })),
+            mainPoolRole(
+                entry("a", 9, 4, {
+                    roles: [
+                        { role: 2, games: 3 },
+                        { role: 4, games: 6 },
+                    ],
+                }),
+            ),
         ).toBe(4);
         expect(mainPoolRole(entry("a", 0, 0, { roles: [] }))).toBeNull();
     });
@@ -346,9 +362,7 @@ describe("match rows", () => {
     });
 
     it("writes the kill line in the universal order", () => {
-        expect(killLine({ kills: 8, deaths: 3, assists: 6 })).toBe(
-            "8 / 3 / 6",
-        );
+        expect(killLine({ kills: 8, deaths: 3, assists: 6 })).toBe("8 / 3 / 6");
     });
 
     it("excludes remakes from the totals and counts them apart", () => {
@@ -396,7 +410,9 @@ describe("predictionVerdict", () => {
     });
 
     it("says nothing about a remake", () => {
-        expect(predictionVerdict(0.7, { win: false, remake: true })!.correct).toBeNull();
+        expect(
+            predictionVerdict(0.7, { win: false, remake: true })!.correct,
+        ).toBeNull();
     });
 
     it("returns null when there is no analysis", () => {

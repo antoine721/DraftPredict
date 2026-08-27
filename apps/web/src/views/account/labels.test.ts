@@ -69,8 +69,12 @@ describe("traits", () => {
             const strength = traitLabel(`playstyle.strength.${axis}`, axis);
             const weakness = traitLabel(`playstyle.weakness.${axis}`, axis);
             expect(strength).not.toBe(weakness);
-            expect(traitAdvice(`playstyle.strength.${axis}`, axis).length).toBeGreaterThan(10);
-            expect(traitAdvice(`playstyle.weakness.${axis}`, axis).length).toBeGreaterThan(10);
+            expect(
+                traitAdvice(`playstyle.strength.${axis}`, axis).length,
+            ).toBeGreaterThan(10);
+            expect(
+                traitAdvice(`playstyle.weakness.${axis}`, axis).length,
+            ).toBeGreaterThan(10);
         }
     });
 

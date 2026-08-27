@@ -505,7 +505,10 @@ describe("LiveBadge", () => {
                 onFollowChange={noop}
             />,
         );
-        expect(html).toContain("Client non détecté");
+        // The header's connection cluster states "Client non détecté" on every
+        // view, so repeating it here was noise. What must never happen is the
+        // badge implying a live sync that does not exist.
+        expect(html).not.toContain("Synchronisé");
         expect(html).toContain("disabled");
     });
 });

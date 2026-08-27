@@ -89,9 +89,7 @@ export function ComparePanel({
         >
             <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3 border-b border-line pb-3">
                 <SideHeader side={left} align="left" />
-                <span className="text-xs font-semibold tracking-wider text-ink-subtle uppercase">
-                    vs
-                </span>
+                <span className="text-xs font-semibold text-ink-subtle">vs</span>
                 <SideHeader side={right} align="right" />
             </div>
 
@@ -204,7 +202,7 @@ export function ComparePanel({
                 <LoadingState label="Chargement des deux builds…" />
             ) : (
                 <div className="mt-4 flex flex-col gap-0">
-                    <h3 className="mb-2 text-[11px] font-medium tracking-wider text-ink-subtle uppercase">
+                    <h3 className="mb-2 text-xs font-medium text-ink-subtle">
                         Choix recommandés
                     </h3>
                     <dl className="divide-y divide-line-soft">
@@ -351,9 +349,7 @@ function CompareRow({
             >
                 {left}
             </dd>
-            <dt className="text-center text-[11px] tracking-wider text-ink-subtle uppercase">
-                {label}
-            </dt>
+            <dt className="text-center text-xs text-ink-subtle">{label}</dt>
             <dd
                 className={cn(
                     "tabular min-w-0 text-right text-sm",

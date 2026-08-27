@@ -393,7 +393,7 @@ export function ChampionTable({
                         type="button"
                         onClick={() => onSort(key)}
                         className={cn(
-                            "inline-flex items-center gap-1 rounded-control tracking-wider uppercase transition-colors",
+                            "inline-flex items-center gap-1 rounded-control transition-colors",
                             "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold",
                             active ? "text-gold" : "hover:text-ink",
                         )}
@@ -414,7 +414,7 @@ export function ChampionTable({
         <div className="scrollbar-slim overflow-x-auto">
             <table className="w-full min-w-[52rem] border-collapse text-sm">
                 <thead className="sticky top-0 z-10 bg-surface-1/95 backdrop-blur">
-                    <tr className="text-left text-[11px] tracking-wider text-ink-subtle uppercase">
+                    <tr className="text-left text-xs text-ink-subtle">
                         <th scope="col" className="w-8 py-2 pl-3" />
                         {heading("name", "Champion", "left")}
                         <th scope="col" className="py-2 font-medium">

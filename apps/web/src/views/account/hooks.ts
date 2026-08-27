@@ -1,7 +1,12 @@
 import { useCallback, useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import type { SerializedDraftState } from "@draftpredict/core";
-import type { AnalyzePayload, ApiError, JobProgress, PlaystyleResponse } from "../../api";
+import type {
+    AnalyzePayload,
+    ApiError,
+    JobProgress,
+    PlaystyleResponse,
+} from "../../api";
 import {
     api,
     queryKeys,

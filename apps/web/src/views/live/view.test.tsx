@@ -332,8 +332,12 @@ describe("LiveView — champion select", () => {
         expect(html).toContain("53,1");
     });
 
-    it("labels the offline fixture instead of passing it off as live data", () => {
-        expect(html).toContain("Données de démonstration hors-ligne");
+    it("does not present the offline fixture as live statistics", () => {
+        // The label itself is the shell's job now — one badge, on every view
+        // (see app/shell.test.tsx, "labels an offline dataset"). What this view
+        // owes is never to assert the opposite.
+        expect(html).not.toContain("statistiques réelles");
+        expect(html).not.toContain("données live");
     });
 
     it("names the account it follows and where it came from", () => {

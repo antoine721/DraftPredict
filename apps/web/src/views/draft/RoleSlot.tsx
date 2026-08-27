@@ -197,7 +197,7 @@ export function RoleSlot({
                         mirrored ? "top-8 left-1" : "top-8 right-1",
                     )}
                 >
-                    <span className="px-2 py-1 text-[10px] tracking-wider text-ink-subtle uppercase">
+                    <span className="px-2 py-1 text-xs text-ink-subtle">
                         Déplacer vers
                     </span>
                     {ROLES.filter((other) => other !== role).map((other) => (

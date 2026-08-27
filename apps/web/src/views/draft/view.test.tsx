@@ -80,7 +80,12 @@ describe("DraftView", () => {
         expect(html).toContain("Votre équipe");
     });
 
-    it("says the client is not connected instead of pretending it is", () => {
-        expect(render()).toContain("Client non détecté");
+    it("never claims a live sync when no client is connected", () => {
+        // The client's state is stated once, by the shell's connection cluster
+        // (see app/shell.test.tsx). What this view owes is the absence of a
+        // false claim.
+        const html = render();
+        expect(html).not.toContain("Synchronisé avec le client");
+        expect(html).not.toContain("Hors sélection");
     });
 });

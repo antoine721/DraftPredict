@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-
 /**
  * The data layer of the "Partie en cours" view.
  *

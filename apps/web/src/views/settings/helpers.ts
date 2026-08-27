@@ -91,15 +91,13 @@ export function describeProbe(probe: RiotKeyProbeResult | null): Report | null {
             return {
                 tone: "negative",
                 label: "Clé refusée par Riot",
-                detail:
-                    "Riot a répondu 401/403 : la clé est expirée ou révoquée. Rien n'a été enregistré.",
+                detail: "Riot a répondu 401/403 : la clé est expirée ou révoquée. Rien n'a été enregistré.",
             };
         case "unreachable":
             return {
                 tone: "warning",
                 label: "Riot injoignable",
-                detail:
-                    "La clé a été enregistrée sans vérification : api.riotgames.com n'a pas répondu (hors-ligne, proxy ou pare-feu).",
+                detail: "La clé a été enregistrée sans vérification : api.riotgames.com n'a pas répondu (hors-ligne, proxy ou pare-feu).",
             };
         case "skipped":
         default:
@@ -119,8 +117,7 @@ export function describeKeySource(config: PublicConfig): Report {
         return {
             tone: "offline",
             label: "Aucune clé",
-            detail:
-                "Les fonctions de compte sont désactivées ; le draft et le client League fonctionnent normalement.",
+            detail: "Les fonctions de compte sont désactivées ; le draft et le client League fonctionnent normalement.",
         };
     }
     const source = config.riotApiKeySource;
@@ -128,8 +125,7 @@ export function describeKeySource(config: PublicConfig): Report {
         return {
             tone: "warning",
             label: "Clé fournie par l'environnement",
-            detail:
-                "La clé active vient de la variable d'environnement RIOT_API_KEY. En enregistrer une ici l'emportera sur celle-ci (fichier > environnement) ; la retirer d'ici ne supprime pas la variable.",
+            detail: "La clé active vient de la variable d'environnement RIOT_API_KEY. En enregistrer une ici l'emportera sur celle-ci (fichier > environnement) ; la retirer d'ici ne supprime pas la variable.",
         };
     }
     return {
@@ -195,7 +191,9 @@ export function datasetSourceLabel(source: DatasetSource | null | undefined): st
 
 // --------------------------------------------------------- account, region ---
 
-export function platformOption(platform: string | null | undefined): PlatformOption | null {
+export function platformOption(
+    platform: string | null | undefined,
+): PlatformOption | null {
     if (!platform) return null;
     const needle = platform.trim().toLowerCase();
     return PLATFORMS.find((entry) => entry.id === needle) ?? null;
@@ -295,13 +293,7 @@ export function parseIntegerInput(raw: string): number | null {
 }
 
 export type SectionId =
-    | "cle-api"
-    | "compte"
-    | "analyse"
-    | "client"
-    | "donnees"
-    | "interface"
-    | "bureau";
+    "cle-api" | "compte" | "analyse" | "client" | "donnees" | "interface" | "bureau";
 
 export type SectionDescriptor = { id: SectionId; label: string };
 

@@ -55,7 +55,7 @@ export function IdlePanel({
                     <ClientStatusCard status={status} />
 
                     <Card padding="sm" className="flex flex-col gap-1.5">
-                        <span className="flex items-center gap-2 text-[11px] font-medium tracking-wider text-ink-subtle uppercase">
+                        <span className="flex items-center gap-2 text-xs font-medium text-ink-subtle">
                             Surveillance
                             <Badge
                                 tone={

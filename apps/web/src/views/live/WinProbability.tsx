@@ -66,7 +66,7 @@ export function WinProbability({
         <div className={cn("flex flex-col gap-3", className)}>
             <div className="flex items-end justify-between gap-4">
                 <div className="flex flex-col">
-                    <span className="flex items-center gap-1.5 text-[11px] font-medium tracking-wider text-ink-subtle uppercase">
+                    <span className="flex items-center gap-1.5 text-xs font-medium text-ink-subtle">
                         <Gauge className="h-3.5 w-3.5" aria-hidden />
                         Probabilité de victoire
                     </span>

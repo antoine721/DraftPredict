@@ -105,7 +105,7 @@ export function MatchupTable({
             >
                 <div className="grid gap-4 xl:grid-cols-2">
                     <section className="min-w-0">
-                        <h3 className="mb-2 text-[11px] font-medium tracking-wider text-winrate-great uppercase">
+                        <h3 className="mb-2 text-xs font-medium text-winrate-great">
                             Meilleurs duels pour {championName}
                         </h3>
                         <PairTable
@@ -117,7 +117,7 @@ export function MatchupTable({
                         />
                     </section>
                     <section className="min-w-0">
-                        <h3 className="mb-2 text-[11px] font-medium tracking-wider text-winrate-terrible uppercase">
+                        <h3 className="mb-2 text-xs font-medium text-winrate-terrible">
                             Duels les plus difficiles
                         </h3>
                         <PairTable

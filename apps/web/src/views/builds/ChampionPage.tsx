@@ -23,7 +23,6 @@ import {
     Tabs,
     Tag,
 } from "../../ui";
-import { DatasetNotice } from "../../app/DatasetNotice";
 import { ROUTES } from "../../app/routes";
 import { ChampionHeader } from "./ChampionHeader";
 import { ComparePanel } from "./ComparePanel";
@@ -140,9 +139,6 @@ export function ChampionPage({
                     <ArrowLeft className="h-3.5 w-3.5" />
                     Tous les champions
                 </Link>
-                {builds.data && (
-                    <DatasetNotice source={builds.data.source} className="flex-1" />
-                )}
             </div>
 
             <ChampionHeader

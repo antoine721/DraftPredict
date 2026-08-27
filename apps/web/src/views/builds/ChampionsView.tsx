@@ -1,11 +1,10 @@
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import type { Role } from "@draftpredict/core";
 import type { ChampionSummary } from "../../api";
 import { useChampionIndex } from "../../api";
 import { isRoleValue } from "../../lib";
 import { EmptyState, ErrorState, Panel, SkeletonList } from "../../ui";
-import { DatasetNotice } from "../../app/DatasetNotice";
 import { ROUTES } from "../../app/routes";
 import { ChampionIndex } from "./ChampionIndex";
 import { ChampionPage, type DetailTab } from "./ChampionPage";
@@ -64,21 +63,6 @@ export default function ChampionsView() {
             setSearch(next, { replace: true });
         },
         [search, setSearch],
-    );
-
-    const datasetNotice = useMemo(
-        () =>
-            stats.meta ? (
-                <DatasetNotice
-                    source={{
-                        provider: stats.meta.provider,
-                        description:
-                            "Les statistiques par champion sont calculées dans le navigateur à partir du jeu de données synthétique fourni hors-ligne",
-                        offline: stats.meta.offline,
-                    }}
-                />
-            ) : null,
-        [stats.meta],
     );
 
     if (index.error) {
@@ -163,16 +147,14 @@ export default function ChampionsView() {
                 />
             ) : (
                 <>
-                    <div className="flex flex-col gap-1">
-                        <h1 className="text-lg font-semibold text-ink-strong">
-                            {ROUTES.champions.label}
-                        </h1>
-                        <p className="text-sm text-ink-muted">
-                            {ROUTES.champions.description} — {index.champions.length}{" "}
-                            champions, statistiques par rôle.
-                        </p>
-                        {datasetNotice}
-                    </div>
+                    {/*
+                     * No page title here: the application header already names
+                     * the view, and the dataset's provenance is carried by the
+                     * permanent badge next to it.
+                     */}
+                    <p className="text-sm text-ink-muted">
+                        {index.champions.length} champions, statistiques par rôle.
+                    </p>
                     <ChampionIndex
                         champions={index.champions}
                         stats={stats}

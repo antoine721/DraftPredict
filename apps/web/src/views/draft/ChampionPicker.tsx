@@ -202,7 +202,7 @@ export function ChampionPicker({
 
                 <div
                     aria-hidden
-                    className="flex items-center gap-3 border-b border-line px-2 pb-1 text-[10px] tracking-wider text-ink-subtle uppercase"
+                    className="flex items-center gap-3 border-b border-line px-2 pb-1 text-xs text-ink-subtle"
                 >
                     <span className="flex-1">Champion</span>
                     <span className="w-24 text-right">

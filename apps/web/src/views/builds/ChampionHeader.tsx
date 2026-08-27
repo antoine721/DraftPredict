@@ -161,7 +161,7 @@ export function ChampionHeader({
 
                     <div className="max-w-md">
                         <Tooltip content="Répartition des dégâts infligés aux champions dans ce rôle.">
-                            <span className="text-[11px] font-medium tracking-wider text-ink-subtle uppercase">
+                            <span className="text-xs font-medium text-ink-subtle">
                                 Profil de dégâts
                             </span>
                         </Tooltip>

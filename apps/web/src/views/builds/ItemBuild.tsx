@@ -217,7 +217,7 @@ export function ItemBuild({
                                     />
                                 ) : null}
                                 <span className="min-w-0">
-                                    <span className="block text-[11px] tracking-wide text-ink-subtle uppercase">
+                                    <span className="block text-xs text-ink-subtle">
                                         {ORDER_LABELS[index] ?? `Objet ${index + 1}`}
                                     </span>
                                     <span className="block truncate text-xs font-medium text-ink">
@@ -294,9 +294,7 @@ function BuildStep({ label, entry }: { label: string; entry: BuildEntry }) {
             }
         >
             <span className="flex min-w-24 shrink-0 flex-col items-center gap-1 rounded-card border border-line-soft bg-surface-2/60 px-2 py-2">
-                <span className="text-[10px] tracking-wider text-ink-subtle uppercase">
-                    {label}
-                </span>
+                <span className="text-xs text-ink-subtle">{label}</span>
                 <ItemEntryIcon entry={entry} />
                 <span className="max-w-24 truncate text-[11px] text-ink">
                     {entryLabel(entry)}

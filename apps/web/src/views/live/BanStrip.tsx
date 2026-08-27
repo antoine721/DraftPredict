@@ -33,9 +33,7 @@ export function BanStrip({
     );
     return (
         <div className={cn("flex items-center gap-2", className)}>
-            <span className="text-[11px] font-medium tracking-wider text-ink-subtle uppercase">
-                {label}
-            </span>
+            <span className="text-xs font-medium text-ink-subtle">{label}</span>
             {tiles.length === 0 && (
                 <span className="text-[11px] text-ink-subtle">
                     Aucun ban communiqué

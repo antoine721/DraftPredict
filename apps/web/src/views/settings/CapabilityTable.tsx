@@ -56,13 +56,13 @@ export function CapabilityTable() {
     return (
         <div className="grid gap-4 md:grid-cols-2">
             <div className="rounded-card border border-line bg-surface-2/60 p-3">
-                <p className="mb-3 text-[11px] font-semibold tracking-wider text-positive uppercase">
+                <p className="mb-3 text-xs font-semibold text-positive">
                     Sans clé d'API
                 </p>
                 <CapabilityList items={free} tone="free" />
             </div>
             <div className="rounded-card border border-gold/30 bg-gold/5 p-3">
-                <p className="mb-3 text-[11px] font-semibold tracking-wider text-gold uppercase">
+                <p className="mb-3 text-xs font-semibold text-gold">
                     Avec une clé d'API
                 </p>
                 <CapabilityList items={gated} tone="key" />

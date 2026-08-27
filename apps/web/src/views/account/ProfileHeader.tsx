@@ -3,13 +3,7 @@ import { LogOut, MonitorSmartphone, RefreshCw, Users } from "lucide-react";
 import type { ApiError, ProfileResponse } from "../../api";
 import { cn } from "../../lib/cn";
 import { formatNumber, formatRiotId } from "../../lib/format";
-import {
-    Badge,
-    Button,
-    ErrorState,
-    RiotKeyMissingState,
-    Skeleton,
-} from "../../ui";
+import { Badge, Button, ErrorState, RiotKeyMissingState, Skeleton } from "../../ui";
 import { ROUTES } from "../../app/routes";
 import { MasteryList } from "./MasteryList";
 import { RankCard } from "./RankCard";
@@ -55,7 +49,10 @@ export function ProfileHeader({
     } | null;
 }) {
     const riotId =
-        formatRiotIdOf(profile) ?? account.riotId ?? fallback?.displayName ?? "Compte connecté";
+        formatRiotIdOf(profile) ??
+        account.riotId ??
+        fallback?.displayName ??
+        "Compte connecté";
     const level = profile?.summoner.summonerLevel ?? fallback?.summonerLevel ?? null;
     const iconId = profile?.summoner.profileIconId ?? fallback?.profileIconId ?? null;
     const platform = profile?.platform ?? account.platform;
@@ -200,7 +197,7 @@ function RankedBlock({
             <RankCard label="Classée solo/duo" entry={profile.ranks.solo} />
             <RankCard label="Classée flexible" entry={profile.ranks.flex} />
             <div className="min-w-0">
-                <p className="mb-2 text-[11px] font-medium tracking-wider text-ink-subtle uppercase">
+                <p className="mb-2 text-xs font-medium text-ink-subtle">
                     Maîtrises principales
                 </p>
                 <MasteryList mastery={profile.mastery} />

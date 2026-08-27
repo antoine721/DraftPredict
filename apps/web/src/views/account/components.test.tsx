@@ -99,7 +99,9 @@ describe("RankCard", () => {
         const markup = html(
             <RankCard
                 label="Classée solo/duo"
-                entry={entry({ miniSeries: { wins: 1, losses: 1, target: 3, progress: "WLN" } })}
+                entry={entry({
+                    miniSeries: { wins: 1, losses: 1, target: 3, progress: "WLN" },
+                })}
             />,
         );
         expect(markup).toContain('aria-label="Série de promotion"');
@@ -287,9 +289,7 @@ describe("RiotKeyOnboarding", () => {
         const markup = html(<RiotKeyOnboarding />);
         expect(markup).toContain("Profil de style de jeu");
         expect(markup).toContain("Historique détaillé");
-        expect(markup).toContain(
-            "Le client League of Legends fonctionne sans clé.",
-        );
+        expect(markup).toContain("Le client League of Legends fonctionne sans clé.");
         expect(markup).toContain('href="/parametres"');
         expect(markup).not.toContain('role="alert"');
     });
@@ -490,7 +490,11 @@ describe("ProfileHeader", () => {
 describe("PlaystylePanel", () => {
     it("headlines the archetype in French and draws the radar with its baseline", () => {
         const markup = html(
-            <PlaystylePanel view={playstyleView()} count={50} onCountChange={() => {}} />,
+            <PlaystylePanel
+                view={playstyleView()}
+                count={50}
+                onCountChange={() => {}}
+            />,
         );
         expect(markup).toContain("Split-pusher");
         expect(markup).toContain("side lane");
@@ -506,7 +510,11 @@ describe("PlaystylePanel", () => {
 
     it("offers 20 / 50 / 100 games and a refresh", () => {
         const markup = html(
-            <PlaystylePanel view={playstyleView()} count={50} onCountChange={() => {}} />,
+            <PlaystylePanel
+                view={playstyleView()}
+                count={50}
+                onCountChange={() => {}}
+            />,
         );
         expect(markup).toContain('aria-label="Nombre de parties analysées"');
         expect(markup).toContain(">20<");
@@ -690,9 +698,7 @@ describe("MatchHistoryPanel", () => {
 
 describe("LcuConnectCard", () => {
     it("says the client is not detected instead of pretending to look", () => {
-        const markup = html(
-            <LcuConnectCard onConnect={() => {}} activePuuid={null} />,
-        );
+        const markup = html(<LcuConnectCard onConnect={() => {}} activePuuid={null} />);
         expect(markup).toContain("Détection automatique");
         expect(markup).toContain("aucune clé d&#x27;API nécessaire");
         expect(markup).toContain("Client non détecté");

@@ -37,12 +37,13 @@ export function LiveBadge({
     return (
         <div
             className={cn(
-                "flex flex-wrap items-center gap-x-3 gap-y-2 rounded-panel border px-3 py-2",
+                // Sits in the application header: a pill, not a strip.
+                "flex flex-wrap items-center gap-x-2 gap-y-1 rounded-control border px-2 py-1",
                 active
                     ? followClient
                         ? "border-positive/40 bg-positive/8"
                         : "border-warning/40 bg-warning/8"
-                    : "border-line bg-surface-1/70",
+                    : "border-line/70 bg-surface-2/60",
             )}
         >
             {active ? (
@@ -55,17 +56,11 @@ export function LiveBadge({
                         Édition manuelle
                     </Badge>
                 )
-            ) : (
-                <Badge
-                    tone={connected ? "info" : "offline"}
-                    dot={connected}
-                    icon={<MonitorPlay className="h-3 w-3" />}
-                >
-                    {connected
-                        ? "Client connecté — hors sélection"
-                        : "Client non détecté"}
+            ) : connected ? (
+                <Badge tone="info" dot icon={<MonitorPlay className="h-3 w-3" />}>
+                    Hors sélection
                 </Badge>
-            )}
+            ) : null}
 
             {active && state && (
                 <>

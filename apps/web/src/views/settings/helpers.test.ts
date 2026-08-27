@@ -67,13 +67,15 @@ const probe = (
 
 describe("Riot key input", () => {
     it("accepts a key pasted straight out of a .env file", () => {
-        expect(normalizeKeyInput('  export RIOT_API_KEY="RGAPI-1111-2222-3333-4444" ')).toBe(
-            "RGAPI-1111-2222-3333-4444",
-        );
+        expect(
+            normalizeKeyInput('  export RIOT_API_KEY="RGAPI-1111-2222-3333-4444" '),
+        ).toBe("RGAPI-1111-2222-3333-4444");
     });
 
     it("recognises the server's own key shape", () => {
-        expect(looksLikeRiotKey("RGAPI-11111111-2222-3333-4444-555555555555")).toBe(true);
+        expect(looksLikeRiotKey("RGAPI-11111111-2222-3333-4444-555555555555")).toBe(
+            true,
+        );
         expect(looksLikeRiotKey("RGAPI-short")).toBe(false);
         expect(looksLikeRiotKey("https://developer.riotgames.com/")).toBe(false);
     });
@@ -201,9 +203,9 @@ describe("describeLcu", () => {
             "Intégration désactivée",
         );
         expect(describeLcu(status()).label).toBe("Client non détecté");
-        expect(
-            describeLcu(status({ connected: true, summoner: null })).tone,
-        ).toBe("positive");
+        expect(describeLcu(status({ connected: true, summoner: null })).tone).toBe(
+            "positive",
+        );
     });
 
     it("says who is logged in when the client answers", () => {
@@ -230,11 +232,13 @@ describe("describeLcu", () => {
     });
 
     it("spots a setting the running server cannot honour without a restart", () => {
-        expect(lcuNeedsRestart(config({ lcuEnabled: true }), status({ enabled: false })))
-            .toBe(true);
+        expect(
+            lcuNeedsRestart(config({ lcuEnabled: true }), status({ enabled: false })),
+        ).toBe(true);
         expect(lcuNeedsRestart(config({ lcuEnabled: true }), status())).toBe(false);
-        expect(lcuNeedsRestart(config({ lcuEnabled: false }), status({ enabled: false })))
-            .toBe(false);
+        expect(
+            lcuNeedsRestart(config({ lcuEnabled: false }), status({ enabled: false })),
+        ).toBe(false);
         expect(lcuNeedsRestart(null, null)).toBe(false);
     });
 });

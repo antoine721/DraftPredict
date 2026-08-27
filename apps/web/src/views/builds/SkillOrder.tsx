@@ -109,7 +109,7 @@ export function SkillOrder({
 
             {picks.length > 0 && (
                 <div className="mt-4">
-                    <h3 className="mb-2 text-[11px] font-medium tracking-wider text-ink-subtle uppercase">
+                    <h3 className="mb-2 text-xs font-medium text-ink-subtle">
                         Premiers niveaux
                     </h3>
                     <div className="scrollbar-slim overflow-x-auto">

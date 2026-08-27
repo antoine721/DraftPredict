@@ -47,7 +47,7 @@ export function PickAdvice({
 
     return (
         <div className={cn("flex flex-col gap-2", className)}>
-            <h4 className="flex items-center gap-1.5 text-[11px] font-medium tracking-wider text-ink-subtle uppercase">
+            <h4 className="flex items-center gap-1.5 text-xs font-medium text-ink-subtle">
                 <Sparkles className="h-3.5 w-3.5" aria-hidden />
                 {bucket
                     ? `Meilleurs choix en ${roleLongLabels[bucket.role]}`

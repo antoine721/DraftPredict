@@ -6,6 +6,7 @@ import { LiveSocketProvider } from "../api/live";
 import { createQueryClient } from "../api/queries";
 import { AppLayout } from "./AppLayout";
 import { Toaster } from "./toast";
+import { queryKeys } from "../api/keys";
 import { ROUTE_LIST, ROUTES, championPath } from "./routes";
 
 /**
@@ -18,8 +19,12 @@ import { ROUTE_LIST, ROUTES, championPath } from "./routes";
  * query is pending and every status is unknown. That is exactly the state a
  * cold start is in.
  */
-function renderShell(path = ROUTES.draft.path): string {
+function renderShell(
+    path = ROUTES.draft.path,
+    seed?: (client: ReturnType<typeof createQueryClient>) => void,
+): string {
     const queryClient = createQueryClient();
+    seed?.(queryClient);
     return renderToStaticMarkup(
         <QueryClientProvider client={queryClient}>
             <LiveSocketProvider enabled={false}>
@@ -57,8 +62,43 @@ describe("app shell", () => {
 
     it("titles the page with the active route", () => {
         const html = renderShell(ROUTES.settings.path);
-        expect(html).toContain(ROUTES.settings.description);
+        // The header carries the route's name and the view's own controls; the
+        // longer description was dropped so a single bar fits on one line.
+        expect(html).toContain(ROUTES.settings.label);
         expect(html).toContain("contenu de Paramètres");
+    });
+
+    it("always states the League client's status, on every view", () => {
+        // Views used to repeat this in a strip of their own. It now lives here
+        // and nowhere else, so this is the assertion that keeps the app honest
+        // about whether it is really reading the client.
+        for (const path of [ROUTES.draft.path, ROUTES.settings.path]) {
+            expect(renderShell(path)).toContain("Client inconnu");
+        }
+    });
+
+    it("labels an offline dataset, on every view, without being asked", () => {
+        // Views no longer carry their own banner: this badge is the one place
+        // that tells the user the numbers are the synthetic offline fixture.
+        // If this assertion ever goes, the app starts passing made-up
+        // statistics off as real ones.
+        const seedOffline = (client: ReturnType<typeof createQueryClient>) =>
+            client.setQueryData(queryKeys.health, {
+                dataset: {
+                    available: true,
+                    provider: "bundled-fixture",
+                    date: "2026-08-26",
+                    offline: true,
+                },
+            });
+
+        for (const path of [
+            ROUTES.draft.path,
+            ROUTES.champions.path,
+            ROUTES.live.path,
+        ]) {
+            expect(renderShell(path, seedOffline)).toContain("Démo hors-ligne");
+        }
     });
 
     it("renders the connection cluster before anything has answered", () => {

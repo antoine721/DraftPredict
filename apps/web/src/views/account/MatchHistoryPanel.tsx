@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 import { History, RefreshCw } from "lucide-react";
 import type { ApiError, MatchesResponse } from "../../api";
 import { cn } from "../../lib/cn";
-import { NBSP, formatNumber, formatPercent, formatRelativeTime } from "../../lib/format";
+import {
+    NBSP,
+    formatNumber,
+    formatPercent,
+    formatRelativeTime,
+} from "../../lib/format";
 import { winrateTextClass } from "../../lib/winrate";
 import {
     Button,
@@ -126,7 +131,11 @@ export function MatchHistoryPanel({
                     {progress && (
                         <ProgressBar
                             className="mb-2"
-                            value={progress.total > 0 ? progress.loaded / progress.total : 0}
+                            value={
+                                progress.total > 0
+                                    ? progress.loaded / progress.total
+                                    : 0
+                            }
                             indeterminate={progress.total <= 0}
                             label={jobStageLabel(progress.stage)}
                             valueLabel={
@@ -223,7 +232,9 @@ export function MatchHistoryPanel({
                                 expanded={expanded === match.matchId}
                                 onToggle={() =>
                                     setExpanded(
-                                        expanded === match.matchId ? null : match.matchId,
+                                        expanded === match.matchId
+                                            ? null
+                                            : match.matchId,
                                     )
                                 }
                             />

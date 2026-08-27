@@ -34,7 +34,7 @@ export function ChampSelectSide({
         >
             <h3
                 className={cn(
-                    "text-xs font-semibold tracking-wider uppercase",
+                    "text-xs font-semibold",
                     side === "ally" ? "text-team-ally" : "text-team-enemy",
                 )}
             >

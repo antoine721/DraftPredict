@@ -63,7 +63,7 @@ export function TeamColumn({
                 <div className="min-w-0">
                     <h2
                         className={cn(
-                            "truncate text-sm font-semibold tracking-wide uppercase",
+                            "truncate text-sm font-semibold",
                             ally ? "text-team-ally" : "text-team-enemy",
                         )}
                     >

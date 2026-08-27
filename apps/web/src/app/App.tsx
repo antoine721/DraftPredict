@@ -67,10 +67,7 @@ export function App() {
                 <BrowserRouter>
                     <Routes>
                         <Route element={<AppLayout />}>
-                            <Route
-                                index
-                                element={<IndexRedirect />}
-                            />
+                            <Route index element={<IndexRedirect />} />
                             <Route
                                 path={ROUTES.draft.path}
                                 element={

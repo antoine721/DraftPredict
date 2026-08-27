@@ -131,7 +131,7 @@ export function WinProbabilityGauge({
                     >
                         {formatPercent(value)}
                     </span>
-                    <span className="mt-1 text-[11px] tracking-wider text-ink-subtle uppercase">
+                    <span className="mt-1 text-xs text-ink-subtle">
                         Victoire alliée
                     </span>
                 </div>

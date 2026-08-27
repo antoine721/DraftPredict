@@ -34,8 +34,11 @@ export function Panel({
     return (
         <section
             className={cn(
-                "relative flex min-w-0 flex-col overflow-hidden rounded-panel border border-line",
-                "bg-surface-1/90 shadow-panel backdrop-blur-[2px]",
+                "relative flex min-w-0 flex-col overflow-hidden rounded-panel",
+                // One hairline, no shadow, no blur: depth comes from the surface
+                // step, not from stacked effects. Nested panels stop looking
+                // like boxes inside boxes.
+                "border border-line/70 bg-surface-1",
                 className,
             )}
             {...props}
@@ -43,14 +46,16 @@ export function Panel({
             {hasHeader && (
                 <header
                     className={cn(
-                        "flex items-start justify-between gap-4 border-b border-line px-4 py-3",
-                        stickyHeader &&
-                            "sticky top-0 z-10 bg-surface-1/95 backdrop-blur",
+                        "flex items-start justify-between gap-4 px-4 pt-3.5 pb-2.5",
+                        stickyHeader && "sticky top-0 z-10 bg-surface-1",
                     )}
                 >
                     <div className="min-w-0">
                         {typeof title === "string" ? (
-                            <h2 className="truncate text-sm font-semibold tracking-wide text-ink-strong uppercase">
+                            // Sentence case, not caps: hierarchy comes from
+                            // weight and colour. A screen of shouting headings
+                            // reads as noise.
+                            <h2 className="truncate text-sm font-semibold text-ink-strong">
                                 {title}
                             </h2>
                         ) : (
@@ -69,9 +74,16 @@ export function Panel({
                     )}
                 </header>
             )}
-            <div className={cn("min-w-0 flex-1", flush ? "" : "p-4")}>{children}</div>
+            <div
+                className={cn(
+                    "min-w-0 flex-1",
+                    flush ? "" : hasHeader ? "px-4 pt-1 pb-4" : "p-4",
+                )}
+            >
+                {children}
+            </div>
             {footer !== undefined && (
-                <footer className="border-t border-line px-4 py-3 text-xs text-ink-muted">
+                <footer className="border-t border-line/70 px-4 py-3 text-xs text-ink-muted">
                     {footer}
                 </footer>
             )}
@@ -81,14 +93,11 @@ export function Panel({
 
 /** A thin separator that carries a label, for splitting a panel body. */
 export function PanelDivider({ label }: { label?: ReactNode }) {
-    if (label === undefined) return <hr className="my-4 border-line" />;
+    if (label === undefined) return <hr className="my-4 border-line/70" />;
     return (
         <div className="my-4 flex items-center gap-3">
-            <hr className="flex-1 border-line" />
-            <span className="text-[11px] font-medium tracking-wider text-ink-subtle uppercase">
-                {label}
-            </span>
-            <hr className="flex-1 border-line" />
+            <span className="text-xs font-medium text-ink-muted">{label}</span>
+            <hr className="flex-1 border-line/70" />
         </div>
     );
 }

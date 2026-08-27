@@ -19,6 +19,7 @@ import { IconButton, Tooltip } from "../ui";
 import { ConnectionStatus } from "./ConnectionStatus";
 import { ROUTE_LIST, ROUTES, type AppRouteId } from "./routes";
 import { ShortcutsDialog } from "./ShortcutsDialog";
+import { ViewToolbarProvider } from "./ViewToolbar";
 import { dispatchFocusSearch, useShortcuts } from "./shortcuts";
 import { toast } from "./toast";
 
@@ -38,6 +39,8 @@ export function AppLayout() {
     const navigate = useNavigate();
     const location = useLocation();
     const [helpOpen, setHelpOpen] = useState(false);
+    // Filled by whichever view is mounted; see ViewToolbar.
+    const [toolbarSlot, setToolbarSlot] = useState<HTMLElement | null>(null);
 
     const collapsed = usePreferencesStore((state) => state.navCollapsed);
     const setCollapsed = usePreferencesStore((state) => state.setNavCollapsed);
@@ -175,16 +178,20 @@ export function AppLayout() {
             </nav>
 
             <div className="flex min-w-0 flex-1 flex-col">
-                <header className="sticky top-0 z-30 flex flex-col gap-2 border-b border-line bg-surface-0/85 px-4 py-3 backdrop-blur md:h-16 md:flex-row md:items-center md:justify-between md:gap-4 md:py-0">
-                    <div className="min-w-0">
-                        <h1 className="truncate text-base font-semibold text-ink-strong">
-                            {current.label}
-                        </h1>
-                        <p className="truncate text-xs text-ink-muted">
-                            {current.description}
-                        </p>
-                    </div>
-                    <ConnectionStatus className="justify-start md:justify-end" />
+                {/*
+                 * One bar for the whole application: the view's name, the
+                 * view's own controls, and the connection status. Views must
+                 * not add a second strip of their own.
+                 */}
+                <header className="sticky top-0 z-30 flex flex-col gap-2 border-b border-line bg-surface-0/90 px-4 py-2.5 backdrop-blur md:min-h-14 md:flex-row md:flex-wrap md:items-center md:gap-x-4 md:gap-y-2 md:py-2">
+                    <h1 className="shrink-0 truncate text-sm font-semibold text-ink-strong">
+                        {current.label}
+                    </h1>
+                    <div
+                        ref={setToolbarSlot}
+                        className="flex min-w-0 flex-1 flex-wrap items-center gap-2 md:justify-start"
+                    />
+                    <ConnectionStatus className="shrink-0 justify-start md:justify-end" />
                 </header>
 
                 {/* Mobile navigation. */}
@@ -212,7 +219,9 @@ export function AppLayout() {
                 </nav>
 
                 <main className="min-w-0 flex-1 p-4 lg:p-6">
-                    <Outlet />
+                    <ViewToolbarProvider slot={toolbarSlot}>
+                        <Outlet />
+                    </ViewToolbarProvider>
                 </main>
             </div>
 

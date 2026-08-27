@@ -160,8 +160,8 @@ export function PlaystyleProgress({ view }: { view: PlaystyleView }) {
                 }
             />
             <p className="mt-2 text-[11px] text-ink-subtle">
-                Les parties sont lues une par une à travers le limiteur de débit de
-                Riot : comptez environ une minute pour cinquante parties.
+                Les parties sont lues une par une à travers le limiteur de débit de Riot
+                : comptez environ une minute pour cinquante parties.
             </p>
         </div>
     );
@@ -243,15 +243,19 @@ function Body({ view, count }: { view: PlaystyleView; count: number }) {
 
             <header className="flex flex-col gap-2 rounded-card border border-gold/30 bg-gold/5 px-4 py-3">
                 <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                    <p className="text-[11px] font-medium tracking-wider text-ink-subtle uppercase">
-                        Archétype
-                    </p>
-                    <h3 className="text-xl font-semibold text-gold">{archetype.name}</h3>
+                    <p className="text-xs font-medium text-ink-subtle">Archétype</p>
+                    <h3 className="text-xl font-semibold text-gold">
+                        {archetype.name}
+                    </h3>
                     <Tooltip
                         wide
                         content="Écart entre cet archétype et le suivant : plus il est net, plus votre profil est marqué."
                     >
-                        <Badge tone={profile.archetype.confidence >= 0.5 ? "gold" : "neutral"}>
+                        <Badge
+                            tone={
+                                profile.archetype.confidence >= 0.5 ? "gold" : "neutral"
+                            }
+                        >
                             confiance {formatPercent(profile.archetype.confidence, 0)}
                         </Badge>
                     </Tooltip>
@@ -307,7 +311,7 @@ function Body({ view, count }: { view: PlaystyleView; count: number }) {
                         tab === "traits" ? (
                             <div className="grid gap-4 pt-3 lg:grid-cols-2">
                                 <section>
-                                    <h4 className="mb-2 text-[11px] font-medium tracking-wider text-ink-subtle uppercase">
+                                    <h4 className="mb-2 text-xs font-medium text-ink-subtle">
                                         Forces
                                     </h4>
                                     <TraitList
@@ -316,7 +320,7 @@ function Body({ view, count }: { view: PlaystyleView; count: number }) {
                                     />
                                 </section>
                                 <section>
-                                    <h4 className="mb-2 text-[11px] font-medium tracking-wider text-ink-subtle uppercase">
+                                    <h4 className="mb-2 text-xs font-medium text-ink-subtle">
                                         Faiblesses
                                     </h4>
                                     <TraitList

@@ -4,11 +4,7 @@ import { errorCodeOf, type PublicConfig, type RiotKeyProbeResult } from "../../a
 import { Button, Dialog, IconButton, Input } from "../../ui";
 import { CapabilityTable } from "./CapabilityTable";
 import { useConfigSaver } from "./hooks";
-import {
-    KEY_EXPIRY_NOTE,
-    KEY_RETEST_NOTE,
-    KEY_STORAGE_NOTE,
-} from "./labels";
+import { KEY_EXPIRY_NOTE, KEY_RETEST_NOTE, KEY_STORAGE_NOTE } from "./labels";
 import {
     describeKeySource,
     describeProbe,
@@ -98,7 +94,10 @@ export function RiotKeyPanel({ config }: { config: PublicConfig }) {
                 {config.hasRiotApiKey && (
                     <div className="flex flex-wrap items-center justify-between gap-3 rounded-card border border-line bg-surface-2/60 px-3 py-2">
                         <span className="flex items-center gap-2 text-sm">
-                            <ShieldCheck className="h-4 w-4 text-positive" aria-hidden />
+                            <ShieldCheck
+                                className="h-4 w-4 text-positive"
+                                aria-hidden
+                            />
                             <span className="text-ink-muted">Clé active :</span>
                             <code className="tabular rounded bg-surface-3 px-1.5 py-0.5 text-xs text-ink-strong">
                                 {config.riotApiKeyPreview ?? "RGAPI-****"}
@@ -118,7 +117,9 @@ export function RiotKeyPanel({ config }: { config: PublicConfig }) {
 
                 <SettingRow
                     stacked
-                    title={config.hasRiotApiKey ? "Remplacer la clé" : "Ajouter une clé"}
+                    title={
+                        config.hasRiotApiKey ? "Remplacer la clé" : "Ajouter une clé"
+                    }
                     description={
                         <>
                             Collez la clé affichée sur{" "}
@@ -214,13 +215,14 @@ export function RiotKeyPanel({ config }: { config: PublicConfig }) {
                         <p className="mt-2 text-xs leading-relaxed text-ink-muted">
                             Riot a répondu 401 ou 403 : la clé est expirée, révoquée —
                             ou un proxy a intercepté l'appel de vérification. Si vous
-                            êtes certain de la clé, utilisez « Enregistrer sans tester ».
+                            êtes certain de la clé, utilisez « Enregistrer sans tester
+                            ».
                         </p>
                     )}
                 </SettingRow>
 
                 <div>
-                    <p className="mb-3 text-xs font-medium tracking-wide text-ink-muted uppercase">
+                    <p className="mb-3 text-xs font-medium text-ink-muted">
                         Ce que la clé change
                     </p>
                     <CapabilityTable />

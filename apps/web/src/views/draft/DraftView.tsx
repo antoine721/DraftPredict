@@ -8,7 +8,6 @@ import {
     useLiveDataset,
 } from "../../api";
 import type { BanEntry, SuggestionEntry } from "../../api/types";
-import { DatasetNotice } from "../../app/DatasetNotice";
 import { FOCUS_SEARCH_EVENT } from "../../app/shortcuts";
 import { toast } from "../../app/toast";
 import {
@@ -21,10 +20,10 @@ import {
     useDraftUrlSync,
     usePreferencesStore,
 } from "../../state";
-import { Panel } from "../../ui";
 import { AdvicePanel, type AdviceTab } from "./AdvicePanel";
 import { AnalysisColumn } from "./AnalysisColumn";
 import { ChampionPicker } from "./ChampionPicker";
+import { ViewToolbar } from "../../app/ViewToolbar";
 import { DraftToolbar } from "./DraftToolbar";
 import { LiveBadge } from "./LiveBadge";
 import { TeamColumn } from "./TeamColumn";
@@ -248,20 +247,14 @@ export default function DraftView() {
 
     return (
         <div className="flex flex-col gap-4">
-            <LiveBadge
-                status={status}
-                active={live.active}
-                state={live.state}
-                remainingMs={remainingMs}
-                followClient={followClient}
-                onFollowChange={(follow) =>
-                    useDraftStore.getState().setFollowClient(follow)
-                }
-            />
-
-            {dataset && <DatasetNotice dataset={dataset} />}
-
-            <Panel flush className="px-3 py-2.5">
+            {/*
+             * The board's controls live in the application header rather than
+             * in a strip of their own: the screen used to open with a title
+             * bar, a client-status bar, a dataset banner and a toolbar before
+             * showing a single champion. The dataset's provenance is carried
+             * by the permanent badge in the header, so it is not repeated here.
+             */}
+            <ViewToolbar>
                 <DraftToolbar
                     canUndo={canUndo}
                     canRedo={canRedo}
@@ -287,7 +280,17 @@ export default function DraftView() {
                     resolvedRank={dataset?.rank ?? null}
                     resolvedRegion={dataset?.region ?? null}
                 />
-            </Panel>
+                <LiveBadge
+                    status={status}
+                    active={live.active}
+                    state={live.state}
+                    remainingMs={remainingMs}
+                    followClient={followClient}
+                    onFollowChange={(follow) =>
+                        useDraftStore.getState().setFollowClient(follow)
+                    }
+                />
+            </ViewToolbar>
 
             <div className="grid gap-4 lg:grid-cols-[minmax(220px,1fr)_minmax(360px,1.45fr)_minmax(220px,1fr)]">
                 <TeamColumn

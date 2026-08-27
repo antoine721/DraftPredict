@@ -123,13 +123,11 @@ export function ClientPanel({ config }: { config: PublicConfig }) {
             >
                 <div className="grid gap-4 md:grid-cols-2">
                     <div className="rounded-card border border-line bg-surface-2/60 p-3">
-                        <p className="mb-2 text-[11px] font-semibold tracking-wider text-ink-muted uppercase">
-                            Lu
-                        </p>
+                        <p className="mb-2 text-xs font-semibold text-ink-muted">Lu</p>
                         <FactList items={LCU_READS} />
                     </div>
                     <div className="rounded-card border border-line bg-surface-2/60 p-3">
-                        <p className="mb-2 text-[11px] font-semibold tracking-wider text-ink-muted uppercase">
+                        <p className="mb-2 text-xs font-semibold text-ink-muted">
                             Jamais fait
                         </p>
                         <FactList items={LCU_NEVER} tone="negative" />

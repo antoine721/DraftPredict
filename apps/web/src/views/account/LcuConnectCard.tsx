@@ -51,10 +51,7 @@ export function LcuConnectCard({
                         </p>
                     </div>
                 </div>
-                <Badge
-                    tone={account ? "positive" : ready ? "info" : "offline"}
-                    dot
-                >
+                <Badge tone={account ? "positive" : ready ? "info" : "offline"} dot>
                     {account
                         ? "Compte détecté"
                         : ready
@@ -152,8 +149,8 @@ function Body({
             return (
                 <div className="flex flex-col items-start gap-3 rounded-card border border-line bg-surface-2/60 px-3 py-3">
                     <p className="text-sm text-ink-muted">
-                        Le client est ouvert mais personne n'est connecté. Connectez-vous
-                        dans le client, puis relancez la détection.
+                        Le client est ouvert mais personne n'est connecté.
+                        Connectez-vous dans le client, puis relancez la détection.
                     </p>
                     <Button
                         size="sm"

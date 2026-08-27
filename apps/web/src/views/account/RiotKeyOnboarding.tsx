@@ -108,7 +108,10 @@ export function RiotKeyOnboarding({
                 </ul>
 
                 <div className="flex items-start gap-3 rounded-card border border-info/40 bg-info/10 px-3 py-2.5">
-                    <Monitor aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-info" />
+                    <Monitor
+                        aria-hidden
+                        className="mt-0.5 h-4 w-4 shrink-0 text-info"
+                    />
                     <p className="min-w-0 text-xs text-info">
                         <span className="font-semibold">
                             Le client League of Legends fonctionne sans clé.
@@ -132,9 +135,7 @@ export function RiotKeyOnboarding({
                         Ouvrir les paramètres
                         <ArrowRight aria-hidden className="h-4 w-4" />
                     </Link>
-                    <Badge tone="neutral">
-                        Paramètres → Clé d'API Riot
-                    </Badge>
+                    <Badge tone="neutral">Paramètres → Clé d'API Riot</Badge>
                 </div>
             </div>
         </Card>

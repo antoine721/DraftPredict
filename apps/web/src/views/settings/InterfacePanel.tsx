@@ -4,7 +4,11 @@ import type { ThemePreference } from "../../api";
 import { cn, formatNumber } from "../../lib";
 import { Button, Dialog, Slider, Toggle } from "../../ui";
 import { toast } from "../../app/toast";
-import { preferenceDefaults, usePreferencesStore, type ChampionLayout } from "../../state";
+import {
+    preferenceDefaults,
+    usePreferencesStore,
+    type ChampionLayout,
+} from "../../state";
 import { THEME_LABELS } from "./labels";
 import { SettingRow, SettingsSection } from "./SettingsSection";
 

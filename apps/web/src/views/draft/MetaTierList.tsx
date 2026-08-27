@@ -61,7 +61,7 @@ export function MetaTierList({
         <div className="grid gap-x-6 gap-y-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5">
             {roles.map((bucket) => (
                 <section key={bucket.role} className="flex min-w-0 flex-col gap-2">
-                    <h3 className="flex items-center gap-2 text-xs font-semibold tracking-wider text-ink-muted uppercase">
+                    <h3 className="flex items-center gap-2 text-xs font-semibold text-ink-muted">
                         <RoleIcon role={bucket.role} size="sm" labelled={false} />
                         {roleLongLabels[bucket.role]}
                     </h3>

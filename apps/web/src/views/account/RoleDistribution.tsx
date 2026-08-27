@@ -68,10 +68,7 @@ export function RoleDistribution({
 
             <ul className="flex flex-col gap-1.5">
                 {rows.map((row) => (
-                    <li
-                        key={row.role}
-                        className="flex items-center gap-2.5 text-xs"
-                    >
+                    <li key={row.role} className="flex items-center gap-2.5 text-xs">
                         <span
                             aria-hidden
                             className={cn(

@@ -145,7 +145,7 @@ export function EntryRowHeader({
         <li
             aria-hidden
             className={cn(
-                "flex items-center gap-3 px-2 pb-1 text-[10px] tracking-wider text-ink-subtle uppercase",
+                "flex items-center gap-3 px-2 pb-1 text-xs text-ink-subtle",
                 className,
             )}
         >

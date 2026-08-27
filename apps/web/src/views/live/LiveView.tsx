@@ -10,7 +10,6 @@ import {
     useAccountMe,
     useLiveChampSelect,
     useLiveConnectionState,
-    useLiveDataset,
     useLiveEvent,
     useLiveGame,
     useProfile,
@@ -18,7 +17,6 @@ import {
     useStaticSummonerSpells,
 } from "../../api";
 import type { SummonerSpellDetail } from "../../api/types";
-import { DatasetNotice } from "../../app/DatasetNotice";
 import { ROUTES } from "../../app/routes";
 import { toast } from "../../app/toast";
 import { formatRiotId } from "../../lib/format";
@@ -30,12 +28,7 @@ import { LiveGamePanel } from "./LiveGamePanel";
 import { LiveStatusBar } from "./LiveStatusBar";
 import { SpectatePanel } from "./SpectatePanel";
 import { pollIntervalMs, type LiveTarget, type PollingState } from "./helpers";
-import {
-    useCountdown,
-    useIdleCounter,
-    useNow,
-    usePageVisible,
-} from "./hooks";
+import { useCountdown, useIdleCounter, useNow, usePageVisible } from "./hooks";
 
 /**
  * "Partie en cours" — what is happening right now.
@@ -217,10 +210,6 @@ export default function LiveView() {
 
     const now = useNow(inGame && visible, 1000);
 
-    const pushedDataset = useLiveDataset();
-    const dataset =
-        liveGame.data?.dataset ?? champSelect?.analysis?.dataset ?? pushedDataset;
-
     // ------------------------------------------------------------ actions --
 
     const refresh = useCallback(() => {
@@ -264,8 +253,6 @@ export default function LiveView() {
                 onRefresh={refresh}
                 mirroring={champSelect !== null}
             />
-
-            {dataset && <DatasetNotice dataset={dataset} />}
 
             {champSelect && (
                 <ChampSelectMirror

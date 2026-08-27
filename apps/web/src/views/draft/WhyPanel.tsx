@@ -76,12 +76,7 @@ function FactorColumn({
 }) {
     return (
         <section className="flex min-w-0 flex-col gap-2">
-            <h3
-                className={cn(
-                    "flex items-center gap-1.5 text-xs font-semibold tracking-wider uppercase",
-                    tone,
-                )}
-            >
+            <h3 className={cn("flex items-center gap-1.5 text-xs font-semibold", tone)}>
                 {icon}
                 {title}
             </h3>
